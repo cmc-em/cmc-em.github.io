@@ -9,6 +9,7 @@
  *   node invoice.js                         # Fetch from Google Sheet, create drafts
  *   node invoice.js --send                  # Fetch from Google Sheet, send invoices
  *   node invoice.js --dry-run               # Fetch from Google Sheet, preview only
+ *   node invoice.js --no-min                # Include items below 6-qty minimum (testing)
  *   node invoice.js orders.csv              # Use local CSV file instead
  *
  * Requires:
@@ -29,6 +30,7 @@ const args = process.argv.slice(2);
 const csvFile = args.find((a) => !a.startsWith("--") && a.endsWith(".csv"));
 const dryRun = args.includes("--dry-run");
 const autoSend = args.includes("--send");
+const ignoreMinimum = args.includes("--no-min");
 
 if (!process.env.STRIPE_SECRET_KEY && !dryRun) {
   console.error("Error: STRIPE_SECRET_KEY not found in environment");
@@ -222,14 +224,50 @@ async function main() {
 
   // Count items by product+color to determine pricing tiers
   const productColorCounts = countByProductColor(rows);
-  const tierMap = buildTierMap(productColorCounts);
+
+  // Separate combos that meet minimum (6) from those that don't
+  const MIN_QUANTITY = 6;
+  const eligibleCombos = {};
+  const excludedCombos = {};
+
+  for (const [key, count] of Object.entries(productColorCounts)) {
+    if (ignoreMinimum || count >= MIN_QUANTITY) {
+      eligibleCombos[key] = count;
+    } else {
+      excludedCombos[key] = count;
+    }
+  }
+
+  const tierMap = buildTierMap(eligibleCombos);
 
   console.log("");
+
+  if (ignoreMinimum) {
+    console.log("=== --no-min: Ignoring minimum quantity requirement ===");
+    console.log("");
+  }
+
+  // Show excluded combos first (if any)
+  if (Object.keys(excludedCombos).length > 0) {
+    console.log("=== EXCLUDED (below minimum of 6) ===");
+    for (const key of Object.keys(excludedCombos).sort()) {
+      const [product, color] = key.split("|");
+      const count = excludedCombos[key];
+      console.log(`  ${product} (${color}): ${count} pcs — NOT INVOICED`);
+    }
+    console.log("");
+  }
+
   console.log("=== PRICING BY PRODUCT + COLOR ===");
-  const sortedKeys = Object.keys(productColorCounts).sort();
+  const sortedKeys = Object.keys(eligibleCombos).sort();
+  if (sortedKeys.length === 0) {
+    console.log("  No product+color combos meet the minimum quantity of 6.");
+    console.log("");
+    return;
+  }
   for (const key of sortedKeys) {
     const [product, color] = key.split("|");
-    const count = productColorCounts[key];
+    const count = eligibleCombos[key];
     const tier = tierMap[key];
     const unitPrice = pricing.products[product]?.[tier] || 0;
     console.log(`  ${product} (${color}): ${count} pcs @ $${unitPrice.toFixed(2)} [${getTierLabel(tier)}]`);
@@ -248,7 +286,16 @@ async function main() {
     const lineItems = [];
     let customerTotal = 0;
 
+    let excludedCount = 0;
     for (const item of customer.items) {
+      // Check if this product+color combo is eligible
+      const color = normalizeColor(item.color);
+      const comboKey = `${item.product}|${color}`;
+      if (!eligibleCombos[comboKey]) {
+        excludedCount++;
+        continue;
+      }
+
       const result = getItemPrice(item, tierMap);
       if (result === null) continue;
 
@@ -263,6 +310,17 @@ async function main() {
 
       const embNote = item.embroideredName ? ` + $${pricing.embroideryFee} embroidery` : "";
       console.log(`  ${item.product} ${item.color} (${item.size}): $${price.toFixed(2)}${embNote}`);
+    }
+
+    if (excludedCount > 0) {
+      console.log(`  (${excludedCount} item(s) excluded — below minimum quantity)`);
+    }
+
+    // Skip if no eligible items
+    if (lineItems.length === 0) {
+      console.log("  No eligible items — skipping invoice");
+      console.log("");
+      continue;
     }
 
     // Add Stripe processing fee (2.9% + $0.30)
