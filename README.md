@@ -1,0 +1,53 @@
+# CMC EM Patagonia Order Form
+
+Static order form → Google Sheet → Stripe invoicing pipeline.
+
+## Setup
+
+### 1. Google Sheet + Apps Script
+
+1. Create a new Google Sheet (this will store all orders).
+2. Go to **Extensions → Apps Script**.
+3. Paste the contents of `google-apps-script.js` into `Code.gs` (replace any existing code).
+4. Click **Deploy → New Deployment**.
+5. Set **Type** = Web app, **Execute as** = Me, **Who has access** = Anyone.
+6. Click **Deploy** and copy the URL.
+
+### 2. Connect the form
+
+1. Open `index.html`.
+2. Find the line near the top of the `<script>` block:
+   ```js
+   const APPS_SCRIPT_URL = "";
+   ```
+3. Paste your Apps Script URL between the quotes.
+
+### 3. Deploy to GitHub Pages
+
+1. Create a new GitHub repo (e.g. `cmc-patagonia-order`).
+2. Push `index.html` to the `main` branch.
+3. Go to **Settings → Pages → Source** = "Deploy from a branch", branch = `main`, folder = `/ (root)`.
+4. Your form will be live at `https://<your-username>.github.io/cmc-patagonia-order/`.
+
+### 4. After orders close — Stripe invoicing
+
+Once pricing is finalized, export the Google Sheet as CSV and use a Node script to:
+1. Create Stripe products (Jacket, Vest, Quarter Zip) with final prices.
+2. Create Stripe customers from unique emails.
+3. Generate one invoice per customer with their line items.
+4. Send all invoices.
+
+That script will be built as a separate step once you're ready.
+
+## Sheet format
+
+Each row in the sheet is one line item:
+
+| Timestamp | Name | Phone | Email | Position | Product | Style | Size | Color | Logo | Embroidered Name | Thread Color |
+|-----------|------|-------|-------|----------|---------|-------|------|-------|------|------------------|--------------|
+
+A person who orders 3 items will have 3 rows (with their info repeated). This makes it easy to aggregate by email later.
+
+## Giving your brother access
+
+Share the Google Sheet with your brother's Google account (Editor access). He can monitor incoming orders in real time.

@@ -1,0 +1,4 @@
+# Project files not needed in repo
+*.zip
+*.docx
+.DS_Store
