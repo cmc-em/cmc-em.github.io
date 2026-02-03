@@ -20,17 +20,32 @@
 const fs = require("fs");
 const path = require("path");
 
-// Load environment variables from .env
+// Load environment variables
 require("dotenv").config();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// Local modules
+const { parseCSV } = require("./lib/csv");
+const {
+  normalizeColor,
+  countByProductColor,
+  getTierLabel,
+  buildTierMap,
+  getItemPrice,
+  groupByEmail,
+  filterByMinimum,
+  calculateStripeFee,
+  formatItemDescription,
+} = require("./lib/pricing");
 
-// Parse CLI arguments
+// ─── CLI Arguments ───────────────────────────────────────────────────────────
+
 const args = process.argv.slice(2);
 const csvFile = args.find((a) => !a.startsWith("--") && a.endsWith(".csv"));
 const dryRun = args.includes("--dry-run");
 const autoSend = args.includes("--send");
 const ignoreMinimum = args.includes("--no-min");
+
+// ─── Validation ──────────────────────────────────────────────────────────────
 
 if (!process.env.STRIPE_SECRET_KEY && !dryRun) {
   console.error("Error: STRIPE_SECRET_KEY not found in environment");
@@ -48,7 +63,8 @@ if (!csvFile && !process.env.APPS_SCRIPT_URL) {
   process.exit(1);
 }
 
-// Load pricing config
+// ─── Config ──────────────────────────────────────────────────────────────────
+
 const pricingPath = path.join(__dirname, "pricing.json");
 if (!fs.existsSync(pricingPath)) {
   console.error("Error: pricing.json not found");
@@ -56,39 +72,12 @@ if (!fs.existsSync(pricingPath)) {
 }
 const pricing = JSON.parse(fs.readFileSync(pricingPath, "utf-8"));
 
-// Parse CSV (simple parser for Google Sheets export)
-function parseCSV(content) {
-  const lines = content.trim().split("\n");
-  const headers = parseCSVLine(lines[0]);
-  return lines.slice(1).map((line) => {
-    const values = parseCSVLine(line);
-    const row = {};
-    headers.forEach((h, i) => (row[h.trim()] = values[i]?.trim() || ""));
-    return row;
-  });
-}
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-function parseCSVLine(line) {
-  const result = [];
-  let current = "";
-  let inQuotes = false;
+const MIN_QUANTITY = 6;
 
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === "," && !inQuotes) {
-      result.push(current);
-      current = "";
-    } else {
-      current += char;
-    }
-  }
-  result.push(current);
-  return result;
-}
+// ─── Data Fetching ───────────────────────────────────────────────────────────
 
-// Fetch orders from Google Apps Script
 async function fetchFromSheet() {
   const url = process.env.APPS_SCRIPT_URL;
   console.log("Fetching orders from Google Sheet...");
@@ -103,142 +92,90 @@ async function fetchFromSheet() {
   return data.orders;
 }
 
-// Colors that count as "Gray" for pricing purposes
-const GRAY_COLORS = ["Birch White", "Stonewash"];
-
-function normalizeColor(color) {
-  if (GRAY_COLORS.includes(color)) return "Gray";
-  return color;
-}
-
-// Count items by product+color to determine pricing tiers
-function countByProductColor(rows) {
-  const counts = {};
-  for (const row of rows) {
-    const product = row.Product;
-    const color = normalizeColor(row.Color);
-    if (!product) continue;
-    const key = `${product}|${color}`;
-    counts[key] = (counts[key] || 0) + 1;
+async function loadOrders() {
+  if (csvFile) {
+    const csvContent = fs.readFileSync(csvFile, "utf-8");
+    const rows = parseCSV(csvContent);
+    console.log(`Loaded ${rows.length} line items from CSV`);
+    return rows;
+  } else {
+    const rows = await fetchFromSheet();
+    console.log(`Fetched ${rows.length} line items from Google Sheet`);
+    return rows;
   }
-  return counts;
 }
 
-// Group orders by email
-function groupByEmail(rows) {
-  const grouped = {};
-  for (const row of rows) {
-    const email = row.Email?.toLowerCase();
-    if (!email) continue;
-    if (!grouped[email]) {
-      grouped[email] = {
-        name: row.Name,
-        phone: row.Phone,
-        email: email,
-        items: [],
-      };
-    }
-    grouped[email].items.push({
-      product: row.Product,
-      style: row.Style,
-      size: row.Size,
-      color: row.Color,
-      logo: row.Logo,
-      embroideredName: row["Embroidered Name"] || "",
-      threadColor: row["Thread Color"] || "",
+// ─── Invoice Creation ────────────────────────────────────────────────────────
+
+async function createInvoice(customer, lineItems, orderTotal) {
+  // Find or create Stripe customer
+  const existingCustomers = await stripe.customers.list({ email: customer.email, limit: 1 });
+  let stripeCustomer;
+
+  if (existingCustomers.data.length > 0) {
+    stripeCustomer = existingCustomers.data[0];
+    console.log(`  Using existing Stripe customer: ${stripeCustomer.id}`);
+  } else {
+    stripeCustomer = await stripe.customers.create({
+      email: customer.email,
+      name: customer.name,
+      phone: customer.phone,
+      metadata: { source: "cmc-patagonia-order" },
+    });
+    console.log(`  Created Stripe customer: ${stripeCustomer.id}`);
+  }
+
+  // Create invoice
+  const invoice = await stripe.invoices.create({
+    customer: stripeCustomer.id,
+    collection_method: "send_invoice",
+    days_until_due: 14,
+    metadata: { source: "cmc-patagonia-order" },
+  });
+
+  // Add line items
+  for (const item of lineItems) {
+    await stripe.invoiceItems.create({
+      customer: stripeCustomer.id,
+      invoice: invoice.id,
+      description: item.description,
+      amount: item.amount,
+      currency: item.currency,
     });
   }
-  return Object.values(grouped);
-}
 
-// Determine pricing tier based on quantity
-function getPricingTier(qty) {
-  for (const tier of pricing.tiers) {
-    if (qty >= tier.minQty) {
-      return tier.minQty.toString();
-    }
+  // Finalize invoice
+  const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
+
+  if (autoSend) {
+    await stripe.invoices.sendInvoice(invoice.id);
+    console.log(`  Invoice sent: ${finalizedInvoice.hosted_invoice_url}`);
+  } else {
+    console.log(`  Draft invoice created: ${finalizedInvoice.hosted_invoice_url}`);
   }
-  // Default to lowest tier if under minimum
-  return pricing.tiers[pricing.tiers.length - 1].minQty.toString();
+
+  return finalizedInvoice;
 }
 
-function getTierLabel(tierKey) {
-  const tier = pricing.tiers.find((t) => t.minQty.toString() === tierKey);
-  return tier ? tier.label : tierKey;
-}
+// ─── Main ────────────────────────────────────────────────────────────────────
 
-// Build a map of product+color -> tier based on quantities
-function buildTierMap(productColorCounts) {
-  const tierMap = {};
-  for (const [key, count] of Object.entries(productColorCounts)) {
-    tierMap[key] = getPricingTier(count);
-  }
-  return tierMap;
-}
-
-// Calculate line item price using the product+color tier
-function getItemPrice(item, tierMap) {
-  const productPricing = pricing.products[item.product];
-  if (!productPricing) {
-    console.warn(`Warning: Unknown product "${item.product}", skipping`);
-    return null;
-  }
-  const color = normalizeColor(item.color);
-  const key = `${item.product}|${color}`;
-  const tierKey = tierMap[key] || "6";
-  const basePrice = productPricing[tierKey];
-  const embroideryFee = item.embroideredName ? pricing.embroideryFee : 0;
-  return { price: basePrice + embroideryFee, tierKey };
-}
-
-// Format item description
-function getItemDescription(item) {
-  let desc = `${item.product} - ${item.style} ${item.size} (${item.color})`;
-  desc += `\nLogo: ${item.logo}`;
-  if (item.embroideredName) {
-    desc += `\nEmbroidered: "${item.embroideredName}" (${item.threadColor} thread)`;
-  }
-  return desc;
-}
-
-// Main invoice generation
 async function main() {
   console.log(dryRun ? "=== DRY RUN MODE ===" : "=== INVOICE GENERATION ===");
   console.log(`Mode: ${autoSend ? "Create and SEND" : "Create as DRAFTS"}`);
   console.log("");
 
-  // Get orders from CSV or Google Sheet
-  let rows;
-  if (csvFile) {
-    const csvContent = fs.readFileSync(csvFile, "utf-8");
-    rows = parseCSV(csvContent);
-    console.log(`Loaded ${rows.length} line items from CSV`);
-  } else {
-    rows = await fetchFromSheet();
-    console.log(`Fetched ${rows.length} line items from Google Sheet`);
-  }
-
-  // Group by customer
+  // Load orders
+  const rows = await loadOrders();
   const customers = groupByEmail(rows);
   console.log(`Found ${customers.length} unique customers`);
 
-  // Count items by product+color to determine pricing tiers
+  // Count by product+color and filter by minimum
   const productColorCounts = countByProductColor(rows);
+  const { eligible: eligibleCombos, excluded: excludedCombos } = ignoreMinimum
+    ? { eligible: productColorCounts, excluded: {} }
+    : filterByMinimum(productColorCounts, MIN_QUANTITY);
 
-  // Separate combos that meet minimum (6) from those that don't
-  const MIN_QUANTITY = 6;
-  const eligibleCombos = {};
-  const excludedCombos = {};
-
-  for (const [key, count] of Object.entries(productColorCounts)) {
-    if (ignoreMinimum || count >= MIN_QUANTITY) {
-      eligibleCombos[key] = count;
-    } else {
-      excludedCombos[key] = count;
-    }
-  }
-
-  const tierMap = buildTierMap(eligibleCombos);
+  const tierMap = buildTierMap(eligibleCombos, pricing.tiers);
 
   console.log("");
 
@@ -247,7 +184,7 @@ async function main() {
     console.log("");
   }
 
-  // Show excluded combos first (if any)
+  // Show excluded combos
   if (Object.keys(excludedCombos).length > 0) {
     console.log("=== EXCLUDED (below minimum of 6) ===");
     for (const key of Object.keys(excludedCombos).sort()) {
@@ -258,6 +195,7 @@ async function main() {
     console.log("");
   }
 
+  // Show eligible pricing
   console.log("=== PRICING BY PRODUCT + COLOR ===");
   const sortedKeys = Object.keys(eligibleCombos).sort();
   if (sortedKeys.length === 0) {
@@ -270,7 +208,7 @@ async function main() {
     const count = eligibleCombos[key];
     const tier = tierMap[key];
     const unitPrice = pricing.products[product]?.[tier] || 0;
-    console.log(`  ${product} (${color}): ${count} pcs @ $${unitPrice.toFixed(2)} [${getTierLabel(tier)}]`);
+    console.log(`  ${product} (${color}): ${count} pcs @ $${unitPrice.toFixed(2)} [${getTierLabel(tier, pricing.tiers)}]`);
   }
   console.log(`  Embroidery fee: $${pricing.embroideryFee.toFixed(2)} per item`);
   console.log("");
@@ -282,13 +220,12 @@ async function main() {
   for (const customer of customers) {
     console.log(`--- ${customer.name} (${customer.email}) ---`);
 
-    // Calculate items and total
     const lineItems = [];
     let customerTotal = 0;
-
     let excludedCount = 0;
+
     for (const item of customer.items) {
-      // Check if this product+color combo is eligible
+      // Check eligibility
       const color = normalizeColor(item.color);
       const comboKey = `${item.product}|${color}`;
       if (!eligibleCombos[comboKey]) {
@@ -296,14 +233,14 @@ async function main() {
         continue;
       }
 
-      const result = getItemPrice(item, tierMap);
+      const result = getItemPrice(item, tierMap, pricing);
       if (result === null) continue;
 
-      const { price, tierKey } = result;
+      const { price } = result;
       customerTotal += price;
       lineItems.push({
-        description: getItemDescription(item),
-        amount: Math.round(price * 100), // Stripe uses cents
+        description: formatItemDescription(item),
+        amount: Math.round(price * 100),
         currency: pricing.currency,
         quantity: 1,
       });
@@ -323,8 +260,8 @@ async function main() {
       continue;
     }
 
-    // Add Stripe processing fee (2.9% + $0.30)
-    const stripeFee = (customerTotal * 0.029) + 0.30;
+    // Add Stripe processing fee
+    const stripeFee = calculateStripeFee(customerTotal);
     const orderTotal = customerTotal + stripeFee;
 
     lineItems.push({
@@ -346,52 +283,7 @@ async function main() {
     }
 
     try {
-      // Find or create Stripe customer
-      const existingCustomers = await stripe.customers.list({ email: customer.email, limit: 1 });
-      let stripeCustomer;
-
-      if (existingCustomers.data.length > 0) {
-        stripeCustomer = existingCustomers.data[0];
-        console.log(`  Using existing Stripe customer: ${stripeCustomer.id}`);
-      } else {
-        stripeCustomer = await stripe.customers.create({
-          email: customer.email,
-          name: customer.name,
-          phone: customer.phone,
-          metadata: { source: "cmc-patagonia-order" },
-        });
-        console.log(`  Created Stripe customer: ${stripeCustomer.id}`);
-      }
-
-      // Create invoice
-      const invoice = await stripe.invoices.create({
-        customer: stripeCustomer.id,
-        collection_method: "send_invoice",
-        days_until_due: 14,
-        metadata: { source: "cmc-patagonia-order" },
-      });
-
-      // Add line items
-      for (const item of lineItems) {
-        await stripe.invoiceItems.create({
-          customer: stripeCustomer.id,
-          invoice: invoice.id,
-          description: item.description,
-          amount: item.amount,
-          currency: item.currency,
-        });
-      }
-
-      // Finalize invoice
-      const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
-
-      if (autoSend) {
-        await stripe.invoices.sendInvoice(invoice.id);
-        console.log(`  Invoice sent: ${finalizedInvoice.hosted_invoice_url}`);
-      } else {
-        console.log(`  Draft invoice created: ${finalizedInvoice.hosted_invoice_url}`);
-      }
-
+      await createInvoice(customer, lineItems, orderTotal);
       invoiceCount++;
     } catch (err) {
       console.error(`  ERROR: ${err.message}`);
@@ -402,7 +294,7 @@ async function main() {
 
   // Summary
   console.log("=== SUMMARY ===");
-  console.log(`Product+color combos: ${Object.keys(productColorCounts).length}`);
+  console.log(`Product+color combos: ${Object.keys(eligibleCombos).length} eligible, ${Object.keys(excludedCombos).length} excluded`);
   console.log(`Total items: ${rows.length}`);
   console.log(`Invoices ${dryRun ? "to create" : "created"}: ${invoiceCount}`);
   console.log(`Total revenue: $${totalRevenue.toFixed(2)}`);

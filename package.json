@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "CMC EM Patagonia order form with Stripe invoicing",
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
     "invoice": "node invoice.js",
     "invoice:dry-run": "node invoice.js --dry-run",
     "invoice:send": "node invoice.js --send"
@@ -10,5 +12,8 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "stripe": "^14.14.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
