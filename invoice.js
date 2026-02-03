@@ -226,8 +226,20 @@ async function main() {
       console.log(`  ${item.product} (${item.size}): $${price.toFixed(2)}${embNote}`);
     }
 
-    console.log(`  TOTAL: $${customerTotal.toFixed(2)}`);
-    totalRevenue += customerTotal;
+    // Add 2.9% Stripe processing fee
+    const stripeFee = customerTotal * 0.029;
+    const orderTotal = customerTotal + stripeFee;
+
+    lineItems.push({
+      description: "Payment processing fee (2.9%)",
+      amount: Math.round(stripeFee * 100),
+      currency: pricing.currency,
+      quantity: 1,
+    });
+
+    console.log(`  Processing fee (2.9%): $${stripeFee.toFixed(2)}`);
+    console.log(`  TOTAL: $${orderTotal.toFixed(2)}`);
+    totalRevenue += orderTotal;
 
     if (dryRun) {
       console.log("  [DRY RUN] Would create invoice");
