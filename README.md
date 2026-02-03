@@ -47,7 +47,3 @@ Each row in the sheet is one line item:
 |-----------|------|-------|-------|----------|---------|-------|------|-------|------|------------------|--------------|
 
 A person who orders 3 items will have 3 rows (with their info repeated). This makes it easy to aggregate by email later.
-
-## Giving your brother access
-
-Share the Google Sheet with your brother's Google account (Editor access). He can monitor incoming orders in real time.
