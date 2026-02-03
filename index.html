@@ -301,6 +301,107 @@
     border-color: var(--danger);
     box-shadow: 0 0 0 3px rgba(181,64,58,0.1);
   }
+
+  /* ── Reference Images ── */
+  .ref-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ref-card {
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .ref-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .ref-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ref-card-label {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ref-card-label span {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    padding: 1rem;
+  }
+
+  .lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+    line-height: 1;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -358,6 +459,25 @@
     </details>
   </section>
 
+  <!-- Reference Images -->
+  <section class="form-section">
+    <h2>Product Reference</h2>
+    <div class="ref-images">
+      <div class="ref-card" onclick="openLightbox('products')">
+        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVD_3HWTd002BNuaiI6yCPIgwWhLYlsPdpabi7QWH3S_djvTtutYE4zxLuhqpdmGJLvEu3DZOBwbqs0te_KDfkezx1494X5G1RKjg9mpC9KqK7EyNNj7dei3KKTscBEsbXtIiD6pLPz-hqQ83yFHsMJeHLYu8dHDJ0RrWtr85esV4CHKurxo0rh9zmHbo8aY5EdbI4TkBQNOyIY=w740" alt="Product Options" loading="lazy">
+        <div class="ref-card-label">Products <span>Click to enlarge</span></div>
+      </div>
+      <div class="ref-card" onclick="openLightbox('colors')">
+        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVCiwdxZplA2ZqXb7CjgTQ93QvTQFaKsWRI5C7TO8WFvASgewNi97jfs7DtjAx5Wv1Z4JsHv03lCwAAJ6cudpH_ueOaxbI6U9yjql5FVbB2aRQ4MuyVdR_OQbxLwl4_BDuWhzPROSR8HySieevMMgHZ4jvGZKoIwriyG4TpuNMNiSB-R--R2GNiQOE9DfsCVFDteleLFjWWcMia9=w740" alt="Color Options" loading="lazy">
+        <div class="ref-card-label">Colors <span>Click to enlarge</span></div>
+      </div>
+      <div class="ref-card" onclick="openLightbox('logos')">
+        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVBowbjfQLZNL-ProtQDDYE7eVFoZyQ1XdryyXtp2bwE8k1MKj-bcAMd9L9Qpj6Tr3vmnlONDjq9fG5WcXUnhp5QqCu_aPWm9O2yQh9j72M9-d8ByCcTts2jnZ5IsUlOFJgsoDzXdTftRcWx9PxJtXPfoprTFkGTEEkmX0eNTpoeU85PWaBatYyvt_q-Tw3NLg8N079Wbo5i6DK0=w740" alt="Logo Options" loading="lazy">
+        <div class="ref-card-label">Logos <span>Click to enlarge</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Form -->
   <form id="orderForm" novalidate>
 
@@ -407,11 +527,55 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
 <script>
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 // Replace this with your deployed Google Apps Script web app URL
 const APPS_SCRIPT_URL = "";
 // ──────────────────────────────────────────────────────────────────────────────
+
+const REF_IMAGES = {
+  products: {
+    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVD_3HWTd002BNuaiI6yCPIgwWhLYlsPdpabi7QWH3S_djvTtutYE4zxLuhqpdmGJLvEu3DZOBwbqs0te_KDfkezx1494X5G1RKjg9mpC9KqK7EyNNj7dei3KKTscBEsbXtIiD6pLPz-hqQ83yFHsMJeHLYu8dHDJ0RrWtr85esV4CHKurxo0rh9zmHbo8aY5EdbI4TkBQNOyIY=w1200",
+    caption: "Better Sweater® Jacket, Vest & Quarter Zip"
+  },
+  colors: {
+    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVCiwdxZplA2ZqXb7CjgTQ93QvTQFaKsWRI5C7TO8WFvASgewNi97jfs7DtjAx5Wv1Z4JsHv03lCwAAJ6cudpH_ueOaxbI6U9yjql5FVbB2aRQ4MuyVdR_OQbxLwl4_BDuWhzPROSR8HySieevMMgHZ4jvGZKoIwriyG4TpuNMNiSB-R--R2GNiQOE9DfsCVFDteleLFjWWcMia9=w1200",
+    caption: "Available Colors by Style"
+  },
+  logos: {
+    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVBowbjfQLZNL-ProtQDDYE7eVFoZyQ1XdryyXtp2bwE8k1MKj-bcAMd9L9Qpj6Tr3vmnlONDjq9fG5WcXUnhp5QqCu_aPWm9O2yQh9j72M9-d8ByCcTts2jnZ5IsUlOFJgsoDzXdTftRcWx9PxJtXPfoprTFkGTEEkmX0eNTpoeU85PWaBatYyvt_q-Tw3NLg8N079Wbo5i6DK0=w1200",
+    caption: "Embroidered Logo Options"
+  }
+};
+
+function openLightbox(key) {
+  const data = REF_IMAGES[key];
+  document.getElementById("lightboxImg").src = data.src;
+  document.getElementById("lightboxCaption").textContent = data.caption;
+  document.getElementById("lightbox").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox(e) {
+  if (e.target.id === "lightbox" || e.target.classList.contains("lightbox-close")) {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+});
 
 const COLORS = {
   mens: [
