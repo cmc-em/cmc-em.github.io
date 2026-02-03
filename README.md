@@ -31,13 +31,42 @@ Static order form → Google Sheet → Stripe invoicing pipeline.
 
 ### 4. After orders close — Stripe invoicing
 
-Once pricing is finalized, export the Google Sheet as CSV and use a Node script to:
-1. Create Stripe products (Jacket, Vest, Quarter Zip) with final prices.
-2. Create Stripe customers from unique emails.
-3. Generate one invoice per customer with their line items.
-4. Send all invoices.
+Once orders are collected, generate invoices using the included script:
 
-That script will be built as a separate step once you're ready.
+#### Setup (one time)
+
+```bash
+npm install
+cp .env.example .env
+# Edit .env and add your Stripe secret key
+```
+
+#### Export orders
+
+1. Open the Google Sheet
+2. File → Download → Comma-separated values (.csv)
+3. Save as `orders.csv` in this directory
+
+#### Generate invoices
+
+```bash
+# Preview what will be invoiced (no Stripe calls)
+node invoice.js orders.csv --dry-run
+
+# Create draft invoices (review in Stripe dashboard before sending)
+node invoice.js orders.csv
+
+# Create and send invoices immediately
+node invoice.js orders.csv --send
+```
+
+Pricing is automatically determined by total order volume:
+- 72+ items: Best pricing tier
+- 50-71 items: Second tier
+- 18-49 items: Third tier
+- 6-17 items: Base tier
+
+Edit `pricing.json` to adjust prices or embroidery fee.
 
 ## Sheet format
 

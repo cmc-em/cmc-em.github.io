@@ -1,0 +1,30 @@
+{
+  "tiers": [
+    { "minQty": 72, "label": "72+ pcs" },
+    { "minQty": 50, "label": "50-71 pcs" },
+    { "minQty": 18, "label": "18-49 pcs" },
+    { "minQty": 6, "label": "6-17 pcs" }
+  ],
+  "products": {
+    "Better Sweater Jacket": {
+      "6": 175.00,
+      "18": 173.58,
+      "50": 162.68,
+      "72": 159.68
+    },
+    "Better Sweater Vest": {
+      "6": 132.88,
+      "18": 131.28,
+      "50": 123.58,
+      "72": 119.88
+    },
+    "Better Sweater Quarter Zip": {
+      "6": 155.00,
+      "18": 152.00,
+      "50": 142.68,
+      "72": 139.58
+    }
+  },
+  "embroideryFee": 8.00,
+  "currency": "usd"
+}

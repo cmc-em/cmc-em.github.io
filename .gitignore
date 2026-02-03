@@ -2,3 +2,14 @@
 *.zip
 *.docx
 .DS_Store
+
+# Environment and secrets - NEVER commit
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+
+# Order data exports
+*.csv

@@ -1,0 +1,14 @@
+{
+  "name": "cmc-patagonia-order",
+  "version": "1.0.0",
+  "description": "CMC EM Patagonia order form with Stripe invoicing",
+  "scripts": {
+    "invoice": "node invoice.js",
+    "invoice:dry-run": "node invoice.js --dry-run",
+    "invoice:send": "node invoice.js --send"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "stripe": "^14.14.0"
+  }
+}
