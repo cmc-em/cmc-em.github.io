@@ -690,7 +690,7 @@
     <details>
       <summary>How do I send payment?</summary>
       <div class="faq-answer">
-        Once all orders are received, you will be emailed an invoice with your total and payment instructions.
+        Once all orders are received, you will be emailed an invoice with your total and payment instructions. A payment processing fee (2.9% + $0.30) will be included in your invoice total.
       </div>
     </details>
 
@@ -1158,11 +1158,11 @@ function buildOrderSummary() {
         <span>$${baseMin.toFixed(2)}–$${baseMax.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
-        <span>Embroidery (${itemCount} × $${EMBROIDERY_FEE.toFixed(2)})</span>
+        <span>Embroidery ($${EMBROIDERY_FEE.toFixed(2)}/item × ${itemCount})</span>
         <span>$${embroideryTotal.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
-        <span>Folding fee (${itemCount} × $${FOLDING_FEE.toFixed(2)})</span>
+        <span>Folding fee ($${FOLDING_FEE.toFixed(2)}/item × ${itemCount})</span>
         <span>$${foldingTotal.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
