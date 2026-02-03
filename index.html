@@ -464,15 +464,15 @@
     <h2>Product Reference</h2>
     <div class="ref-images">
       <div class="ref-card" onclick="openLightbox('products')">
-        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVD_3HWTd002BNuaiI6yCPIgwWhLYlsPdpabi7QWH3S_djvTtutYE4zxLuhqpdmGJLvEu3DZOBwbqs0te_KDfkezx1494X5G1RKjg9mpC9KqK7EyNNj7dei3KKTscBEsbXtIiD6pLPz-hqQ83yFHsMJeHLYu8dHDJ0RrWtr85esV4CHKurxo0rh9zmHbo8aY5EdbI4TkBQNOyIY=w740" alt="Product Options" loading="lazy">
+        <img src="images/products.jpg" alt="Product Options" loading="lazy">
         <div class="ref-card-label">Products <span>Click to enlarge</span></div>
       </div>
       <div class="ref-card" onclick="openLightbox('colors')">
-        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVCiwdxZplA2ZqXb7CjgTQ93QvTQFaKsWRI5C7TO8WFvASgewNi97jfs7DtjAx5Wv1Z4JsHv03lCwAAJ6cudpH_ueOaxbI6U9yjql5FVbB2aRQ4MuyVdR_OQbxLwl4_BDuWhzPROSR8HySieevMMgHZ4jvGZKoIwriyG4TpuNMNiSB-R--R2GNiQOE9DfsCVFDteleLFjWWcMia9=w740" alt="Color Options" loading="lazy">
+        <img src="images/colors.jpg" alt="Color Options" loading="lazy">
         <div class="ref-card-label">Colors <span>Click to enlarge</span></div>
       </div>
       <div class="ref-card" onclick="openLightbox('logos')">
-        <img src="https://lh7-rt.googleusercontent.com/formsz/AN7BsVBowbjfQLZNL-ProtQDDYE7eVFoZyQ1XdryyXtp2bwE8k1MKj-bcAMd9L9Qpj6Tr3vmnlONDjq9fG5WcXUnhp5QqCu_aPWm9O2yQh9j72M9-d8ByCcTts2jnZ5IsUlOFJgsoDzXdTftRcWx9PxJtXPfoprTFkGTEEkmX0eNTpoeU85PWaBatYyvt_q-Tw3NLg8N079Wbo5i6DK0=w740" alt="Logo Options" loading="lazy">
+        <img src="images/logos.jpg" alt="Logo Options" loading="lazy">
         <div class="ref-card-label">Logos <span>Click to enlarge</span></div>
       </div>
     </div>
@@ -542,15 +542,15 @@ const APPS_SCRIPT_URL = "";
 
 const REF_IMAGES = {
   products: {
-    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVD_3HWTd002BNuaiI6yCPIgwWhLYlsPdpabi7QWH3S_djvTtutYE4zxLuhqpdmGJLvEu3DZOBwbqs0te_KDfkezx1494X5G1RKjg9mpC9KqK7EyNNj7dei3KKTscBEsbXtIiD6pLPz-hqQ83yFHsMJeHLYu8dHDJ0RrWtr85esV4CHKurxo0rh9zmHbo8aY5EdbI4TkBQNOyIY=w1200",
+    src: "images/products.jpg",
     caption: "Better Sweater® Jacket, Vest & Quarter Zip"
   },
   colors: {
-    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVCiwdxZplA2ZqXb7CjgTQ93QvTQFaKsWRI5C7TO8WFvASgewNi97jfs7DtjAx5Wv1Z4JsHv03lCwAAJ6cudpH_ueOaxbI6U9yjql5FVbB2aRQ4MuyVdR_OQbxLwl4_BDuWhzPROSR8HySieevMMgHZ4jvGZKoIwriyG4TpuNMNiSB-R--R2GNiQOE9DfsCVFDteleLFjWWcMia9=w1200",
+    src: "images/colors.jpg",
     caption: "Available Colors by Style"
   },
   logos: {
-    src: "https://lh7-rt.googleusercontent.com/formsz/AN7BsVBowbjfQLZNL-ProtQDDYE7eVFoZyQ1XdryyXtp2bwE8k1MKj-bcAMd9L9Qpj6Tr3vmnlONDjq9fG5WcXUnhp5QqCu_aPWm9O2yQh9j72M9-d8ByCcTts2jnZ5IsUlOFJgsoDzXdTftRcWx9PxJtXPfoprTFkGTEEkmX0eNTpoeU85PWaBatYyvt_q-Tw3NLg8N079Wbo5i6DK0=w1200",
+    src: "images/logos.jpg",
     caption: "Embroidered Logo Options"
   }
 };
@@ -661,8 +661,8 @@ function createItemCard() {
     <div class="row-2">
       <div class="field">
         <label>Embroidered Name &amp; Title</label>
-        <div class="field-hint">Optional — e.g. "Jane Doe, MD"</div>
-        <input type="text" data-field="embroideredName" placeholder="Jane Doe, MD">
+        <div class="field-hint">Optional — max 20 characters (e.g. "Jane Doe, MD")</div>
+        <input type="text" data-field="embroideredName" placeholder="Jane Doe, MD" maxlength="20">
       </div>
       <div class="field">
         <label>Name Thread Color</label>
