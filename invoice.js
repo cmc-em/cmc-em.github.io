@@ -211,6 +211,7 @@ async function main() {
     console.log(`  ${product} (${color}): ${count} pcs @ $${unitPrice.toFixed(2)} [${getTierLabel(tier, pricing.tiers)}]`);
   }
   console.log(`  Embroidery fee: $${pricing.embroideryFee.toFixed(2)} per item`);
+  console.log(`  Folding fee: $${pricing.foldingFee.toFixed(2)} per item`);
   console.log("");
 
   // Process each customer
@@ -246,7 +247,7 @@ async function main() {
       });
 
       const embNote = item.embroideredName ? ` + $${pricing.embroideryFee} embroidery` : "";
-      console.log(`  ${item.product} ${item.color} (${item.size}): $${price.toFixed(2)}${embNote}`);
+      console.log(`  ${item.product} ${item.color} (${item.size}): $${price.toFixed(2)}${embNote} (incl. $${pricing.foldingFee} folding)`);
     }
 
     if (excludedCount > 0) {

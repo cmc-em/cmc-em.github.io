@@ -26,5 +26,6 @@
     }
   },
   "embroideryFee": 8.00,
+  "foldingFee": 0.75,
   "currency": "usd"
 }

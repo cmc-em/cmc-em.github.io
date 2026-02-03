@@ -33,6 +33,7 @@ const pricing = {
     "Better Sweater Quarter Zip": { 6: 155.0, 18: 152.0, 50: 142.68, 72: 139.58 },
   },
   embroideryFee: 8.0,
+  foldingFee: 0.75,
   currency: "usd",
 };
 
@@ -214,7 +215,7 @@ describe("getItemPrice", () => {
 
     const result = getItemPrice(item, tierMap, pricing);
 
-    expect(result.price).toBe(173.58);
+    expect(result.price).toBe(173.58 + 0.75);
     expect(result.tierKey).toBe("18");
   });
 
@@ -224,7 +225,7 @@ describe("getItemPrice", () => {
 
     const result = getItemPrice(item, tierMap, pricing);
 
-    expect(result.price).toBe(173.58 + 8.0);
+    expect(result.price).toBe(173.58 + 8.0 + 0.75);
     expect(result.tierKey).toBe("18");
   });
 
@@ -234,7 +235,7 @@ describe("getItemPrice", () => {
 
     const result = getItemPrice(item, tierMap, pricing);
 
-    expect(result.price).toBe(162.68);
+    expect(result.price).toBe(162.68 + 0.75);
     expect(result.tierKey).toBe("50");
   });
 
@@ -253,7 +254,7 @@ describe("getItemPrice", () => {
 
     const result = getItemPrice(item, tierMap, pricing);
 
-    expect(result.price).toBe(132.88);
+    expect(result.price).toBe(132.88 + 0.75);
     expect(result.tierKey).toBe("6");
   });
 });
@@ -409,9 +410,9 @@ describe("integration: full pricing calculation", () => {
     const navyJacket = getItemPrice({ product: "Better Sweater Jacket", color: "New Navy", embroideredName: "" }, tierMap, pricing);
     const blackVest = getItemPrice({ product: "Better Sweater Vest", color: "Black", embroideredName: "" }, tierMap, pricing);
 
-    expect(blackJacket.price).toBe(175.0);  // tier 6
-    expect(navyJacket.price).toBe(173.58);  // tier 18
-    expect(blackVest.price).toBe(123.58);   // tier 50
+    expect(blackJacket.price).toBe(175.0 + 0.75);  // tier 6
+    expect(navyJacket.price).toBe(173.58 + 0.75);  // tier 18
+    expect(blackVest.price).toBe(123.58 + 0.75);   // tier 50
   });
 
   it("combines gray colors for tier calculation", () => {
@@ -431,8 +432,8 @@ describe("integration: full pricing calculation", () => {
     const birchPrice = getItemPrice({ product: "Better Sweater Jacket", color: "Birch White", embroideredName: "" }, tierMap, pricing);
     const stonewashPrice = getItemPrice({ product: "Better Sweater Jacket", color: "Stonewash", embroideredName: "" }, tierMap, pricing);
 
-    expect(birchPrice.price).toBe(175.0);
-    expect(stonewashPrice.price).toBe(175.0);
+    expect(birchPrice.price).toBe(175.0 + 0.75);
+    expect(stonewashPrice.price).toBe(175.0 + 0.75);
   });
 
   it("excludes combos below minimum and prices eligible correctly", () => {
@@ -453,7 +454,7 @@ describe("integration: full pricing calculation", () => {
 
     // Navy should be priced at tier 6
     const navyJacket = getItemPrice({ product: "Better Sweater Jacket", color: "New Navy", embroideredName: "" }, tierMap, pricing);
-    expect(navyJacket.price).toBe(175.0);
+    expect(navyJacket.price).toBe(175.0 + 0.75);
 
     // Black is not in tierMap (excluded)
     expect(tierMap["Better Sweater Jacket|Black"]).toBeUndefined();

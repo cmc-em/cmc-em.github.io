@@ -47,6 +47,7 @@ function getPriceTier(qty) {
 
 /**
  * Creates or updates the Summary tab with item counts, pricing, and totals.
+ * Pricing tier is determined per product+color combination.
  * Can be run manually from the Apps Script editor or via custom menu.
  */
 function updateSummary() {
@@ -59,6 +60,7 @@ function updateSummary() {
     summarySheet = ss.insertSheet("Summary");
   } else {
     summarySheet.clear();
+    summarySheet.clearFormats();
   }
 
   // Read order data
@@ -73,10 +75,8 @@ function updateSummary() {
   const colorIdx = headers.indexOf("Color");
   const embroideredNameIdx = headers.indexOf("Embroidered Name");
 
-  // Count items by product and by product+color
-  const productCounts = {};      // { "Better Sweater Jacket": 10 }
-  const productColorCounts = {}; // { "Better Sweater Jacket|Black": 5 }
-  const embroideryCount = {};    // { "Better Sweater Jacket": 3 } — items with embroidered names
+  // Count items by product+color (this is the key unit for pricing tiers)
+  const productColorData = {}; // { "Better Sweater Jacket|Black": { count: 5, embroideryCount: 2 } }
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
@@ -86,103 +86,129 @@ function updateSummary() {
 
     if (!product) continue;
 
-    // Product totals
-    productCounts[product] = (productCounts[product] || 0) + 1;
-
-    // Product + Color breakdown
     var key = product + "|" + color;
-    productColorCounts[key] = (productColorCounts[key] || 0) + 1;
-
-    // Embroidery count
+    if (!productColorData[key]) {
+      productColorData[key] = { product: product, color: color, count: 0, embroideryCount: 0 };
+    }
+    productColorData[key].count++;
     if (embName && embName.toString().trim()) {
-      embroideryCount[product] = (embroideryCount[product] || 0) + 1;
+      productColorData[key].embroideryCount++;
     }
   }
 
-  // Calculate grand total for tier determination
-  var grandTotal = 0;
-  for (var p in productCounts) {
-    grandTotal += productCounts[p];
+  // Calculate totals
+  var grandTotalItems = 0;
+  var grandTotalCost = 0;
+  var grandTotalEmbroidery = 0;
+  var hasUnfulfilled = false;
+
+  // Process each product+color combo
+  var comboKeys = Object.keys(productColorData).sort();
+  var comboRows = [];
+
+  for (var k = 0; k < comboKeys.length; k++) {
+    var combo = productColorData[comboKeys[k]];
+    var tier = getPriceTier(combo.count);
+    var unitPrice = PRICING[combo.product] ? PRICING[combo.product][tier] : 0;
+    var subtotal = combo.count * unitPrice;
+    var embFees = combo.embroideryCount * EMBROIDERY_FEE;
+
+    var status = "";
+    if (combo.count < 6) {
+      status = "⚠️ NOT FULFILLED";
+      hasUnfulfilled = true;
+    } else {
+      status = "✓ OK";
+      grandTotalItems += combo.count;
+      grandTotalCost += subtotal;
+      grandTotalEmbroidery += embFees;
+    }
+
+    comboRows.push({
+      product: combo.product,
+      color: combo.color,
+      count: combo.count,
+      tier: tier,
+      unitPrice: unitPrice,
+      subtotal: subtotal,
+      embroideryCount: combo.embroideryCount,
+      embFees: embFees,
+      status: status
+    });
   }
-  var tier = getPriceTier(grandTotal);
 
   // Build summary output
   var output = [];
+  var rowTracker = {}; // Track special rows for formatting
 
   // Header section
-  output.push(["ORDER SUMMARY", "", "", "", ""]);
-  output.push(["Total Items:", grandTotal, "", "Price Tier:", tier + "+ pcs"]);
-  output.push(["", "", "", "", ""]);
+  output.push(["ORDER SUMMARY", "", "", "", "", "", ""]);
+  rowTracker.title = output.length;
 
-  // Product breakdown header
-  output.push(["PRODUCT BREAKDOWN", "", "", "", ""]);
-  output.push(["Product", "Qty", "Unit Price", "Subtotal", "Embroidery Fees"]);
+  output.push(["", "", "", "", "", "", ""]);
 
-  var productSubtotal = 0;
-  var embroiderySubtotal = 0;
-  var products = Object.keys(productCounts).sort();
+  // Main breakdown table
+  output.push(["PRODUCT + COLOR BREAKDOWN (Tier is per combo)", "", "", "", "", "", ""]);
+  rowTracker.tableTitle = output.length;
 
-  for (var j = 0; j < products.length; j++) {
-    var prod = products[j];
-    var qty = productCounts[prod];
-    var unitPrice = PRICING[prod] ? PRICING[prod][tier] : 0;
-    var subtotal = qty * unitPrice;
-    var embQty = embroideryCount[prod] || 0;
-    var embFees = embQty * EMBROIDERY_FEE;
+  output.push(["Product", "Color", "Qty", "Tier", "Unit Price", "Subtotal", "Status"]);
+  rowTracker.tableHeader = output.length;
 
-    output.push([prod, qty, "$" + unitPrice.toFixed(2), "$" + subtotal.toFixed(2), embQty > 0 ? embQty + " × $" + EMBROIDERY_FEE.toFixed(2) + " = $" + embFees.toFixed(2) : "-"]);
-
-    productSubtotal += subtotal;
-    embroiderySubtotal += embFees;
-  }
-
-  output.push(["", "", "", "", ""]);
-  output.push(["", "", "Product Total:", "$" + productSubtotal.toFixed(2), ""]);
-  output.push(["", "", "Embroidery Total:", "$" + embroiderySubtotal.toFixed(2), ""]);
-  output.push(["", "", "GRAND TOTAL:", "$" + (productSubtotal + embroiderySubtotal).toFixed(2), ""]);
-  output.push(["", "", "", "", ""]);
-
-  // Color breakdown header
-  output.push(["COLOR BREAKDOWN BY PRODUCT", "", "", "", ""]);
-  output.push(["Product", "Color", "Qty", "", ""]);
-
-  // Sort keys and output
-  var colorKeys = Object.keys(productColorCounts).sort();
   var currentProduct = "";
-  for (var k = 0; k < colorKeys.length; k++) {
-    var parts = colorKeys[k].split("|");
-    var prodName = parts[0];
-    var colorName = parts[1];
-    var count = productColorCounts[colorKeys[k]];
+  for (var j = 0; j < comboRows.length; j++) {
+    var cr = comboRows[j];
 
     // Add blank row between products for readability
-    if (prodName !== currentProduct && currentProduct !== "") {
-      output.push(["", "", "", "", ""]);
+    if (cr.product !== currentProduct && currentProduct !== "") {
+      output.push(["", "", "", "", "", "", ""]);
     }
-    currentProduct = prodName;
+    currentProduct = cr.product;
 
-    output.push([prodName, colorName, count, "", ""]);
+    output.push([
+      cr.product,
+      cr.color,
+      String(cr.count),
+      cr.count < 6 ? "N/A" : cr.tier + "+",
+      cr.count < 6 ? "-" : "$" + cr.unitPrice.toFixed(2),
+      cr.count < 6 ? "-" : "$" + cr.subtotal.toFixed(2),
+      cr.status
+    ]);
+  }
+
+  output.push(["", "", "", "", "", "", ""]);
+
+  // Totals (only for fulfilled items)
+  output.push(["TOTALS (fulfilled items only)", "", "", "", "", "", ""]);
+  rowTracker.totalsTitle = output.length;
+
+  output.push(["Total Items:", String(grandTotalItems), "", "Product Cost:", "$" + grandTotalCost.toFixed(2), "", ""]);
+  output.push(["", "", "", "Embroidery:", "$" + grandTotalEmbroidery.toFixed(2), "", ""]);
+  output.push(["", "", "", "GRAND TOTAL:", "$" + (grandTotalCost + grandTotalEmbroidery).toFixed(2), "", ""]);
+  rowTracker.grandTotal = output.length;
+
+  // Warning if any unfulfilled
+  if (hasUnfulfilled) {
+    output.push(["", "", "", "", "", "", ""]);
+    output.push(["⚠️ WARNING: Combos marked 'NOT FULFILLED' are below the 6-item minimum and will not be ordered.", "", "", "", "", "", ""]);
+    rowTracker.warning = output.length;
   }
 
   // Write to sheet
-  summarySheet.getRange(1, 1, output.length, 5).setValues(output);
+  summarySheet.getRange(1, 1, output.length, 7).setValues(output);
 
-  // Format headers
-  summarySheet.getRange("A1").setFontWeight("bold").setFontSize(14);
-  summarySheet.getRange("A4").setFontWeight("bold").setFontSize(12);
-  summarySheet.getRange("A5:E5").setFontWeight("bold").setBackground("#e8e2da");
-  summarySheet.getRange("A" + (output.length - colorKeys.length - 1)).setFontWeight("bold").setFontSize(12);
-  summarySheet.getRange("A" + (output.length - colorKeys.length) + ":E" + (output.length - colorKeys.length)).setFontWeight("bold").setBackground("#e8e2da");
+  // Apply formatting
+  summarySheet.getRange(rowTracker.title, 1).setFontWeight("bold").setFontSize(14);
+  summarySheet.getRange(rowTracker.tableTitle, 1).setFontWeight("bold").setFontSize(11);
+  summarySheet.getRange(rowTracker.tableHeader, 1, 1, 7).setFontWeight("bold").setBackground("#e8e2da");
+  summarySheet.getRange(rowTracker.totalsTitle, 1).setFontWeight("bold").setFontSize(11);
+  summarySheet.getRange(rowTracker.grandTotal, 4, 1, 2).setFontWeight("bold").setBackground("#d4f5d4");
 
-  // Grand total formatting
-  for (var r = 1; r <= output.length; r++) {
-    if (output[r-1][2] === "GRAND TOTAL:") {
-      summarySheet.getRange(r, 3, 1, 2).setFontWeight("bold").setBackground("#d4f5d4");
-    }
+  if (rowTracker.warning) {
+    summarySheet.getRange(rowTracker.warning, 1).setFontWeight("bold").setFontColor("#b5403a");
   }
 
   // Auto-resize columns
-  summarySheet.autoResizeColumns(1, 5);
+  summarySheet.autoResizeColumns(1, 7);
 
   SpreadsheetApp.getActiveSpreadsheet().toast("Summary updated!", "Success");
 }
