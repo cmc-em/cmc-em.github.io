@@ -92,6 +92,31 @@ async function fetchFromSheet() {
   return data.orders;
 }
 
+async function saveInvoiceIdToSheet(email, invoiceId) {
+  const url = process.env.APPS_SCRIPT_URL;
+  if (!url) return; // Skip if using CSV mode
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "updateInvoiceId",
+        email: email,
+        invoiceId: invoiceId,
+      }),
+    });
+    const result = await response.json();
+    if (result.status === "ok") {
+      console.log(`  Saved invoice ID to sheet (${result.updatedRows} rows)`);
+    } else {
+      console.log(`  Warning: Could not save invoice ID to sheet: ${result.message}`);
+    }
+  } catch (err) {
+    console.log(`  Warning: Could not save invoice ID to sheet: ${err.message}`);
+  }
+}
+
 async function loadOrders() {
   if (csvFile) {
     const csvContent = fs.readFileSync(csvFile, "utf-8");
@@ -284,8 +309,11 @@ async function main() {
     }
 
     try {
-      await createInvoice(customer, lineItems, orderTotal);
+      const invoice = await createInvoice(customer, lineItems, orderTotal);
       invoiceCount++;
+
+      // Save invoice ID back to the Google Sheet
+      await saveInvoiceIdToSheet(customer.email, invoice.id);
     } catch (err) {
       console.error(`  ERROR: ${err.message}`);
     }

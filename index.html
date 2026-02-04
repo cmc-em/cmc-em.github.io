@@ -142,7 +142,26 @@
   #itemsContainer {
     max-height: 60vh;
     overflow-y: auto;
-    padding-right: 0.25rem;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  #itemsContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #itemsContainer::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #itemsContainer::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  #itemsContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
   }
 
   .item-card {
@@ -772,7 +791,7 @@
 
     <!-- Items -->
     <section class="form-section">
-      <h2>Items</h2>
+      <h2>Items <span id="itemsCount" style="font-weight: 400; color: var(--text-muted);"></span></h2>
       <div id="itemsContainer"></div>
       <button type="button" class="btn-add" id="addItemBtn">+ Add another item</button>
     </section>
@@ -969,10 +988,18 @@ function createItemCard() {
   `;
 
   document.getElementById("itemsContainer").appendChild(card);
+  updateItemsCount();
 }
 
 function removeItem(btn) {
   btn.closest(".item-card").remove();
+  updateItemsCount();
+}
+
+function updateItemsCount() {
+  const count = document.querySelectorAll(".item-card").length;
+  const countEl = document.getElementById("itemsCount");
+  countEl.textContent = count > 0 ? `(${count})` : "";
 }
 
 function updateColors(styleSelect) {
@@ -1288,7 +1315,7 @@ document.getElementById("summaryConfirm").addEventListener("click", async () => 
       document.getElementById("orderForm").reset();
       document.getElementById("itemsContainer").innerHTML = "";
       itemCount = 0;
-      createItemCard();
+      createItemCard(); // This calls updateItemsCount()
       pendingPayload = null;
     } else {
       throw new Error(result.message || "Unknown error");
