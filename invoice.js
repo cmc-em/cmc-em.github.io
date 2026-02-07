@@ -136,8 +136,10 @@ async function loadOrders() {
 async function getOrCreateTaxRate(taxRate) {
   // Look for an existing active tax rate we created
   const existing = await stripe.taxRates.list({ active: true, limit: 100 });
+  const percentage = Math.round(taxRate * 10000) / 100;
+
   const match = existing.data.find(
-    (tr) => tr.metadata?.source === "cmc-patagonia-order" && tr.percentage === taxRate * 100
+    (tr) => tr.metadata?.source === "cmc-patagonia-order" && tr.percentage === percentage
   );
 
   if (match) {
@@ -147,7 +149,7 @@ async function getOrCreateTaxRate(taxRate) {
 
   const created = await stripe.taxRates.create({
     display_name: "NC Sales Tax",
-    percentage: taxRate * 100,
+    percentage: percentage,
     inclusive: false,
     jurisdiction: "NC",
     metadata: { source: "cmc-patagonia-order" },
