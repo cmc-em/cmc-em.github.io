@@ -534,13 +534,29 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .summary-customer p {
+  .summary-customer-row {
+    display: flex;
+    gap: 0.75rem;
     font-size: 0.88rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
+    align-items: baseline;
   }
 
-  .summary-customer strong {
-    color: var(--text);
+  .summary-customer-row:last-child { margin-bottom: 0; }
+
+  .summary-customer-label {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    min-width: 42px;
+  }
+
+  .summary-section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0.75rem 0 0.4rem;
   }
 
   .summary-item {
@@ -593,9 +609,11 @@
   }
 
   .summary-fees {
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 1rem;
     margin-bottom: 1rem;
+    background: #fafaf8;
   }
 
   .summary-fee-row {
@@ -603,11 +621,12 @@
     justify-content: space-between;
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 0.4rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
   }
 
   .summary-fee-row:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
   }
 
   .summary-total {
@@ -633,7 +652,7 @@
 
   .summary-total-amount {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: var(--accent);
   }
 
@@ -1170,13 +1189,16 @@ function buildOrderSummary() {
   const name = document.getElementById("personName").value.trim();
   const email = document.getElementById("personEmail").value.trim();
   const phone = document.getElementById("personPhone").value.trim();
+  const position = document.getElementById("personPosition").value;
 
   let html = `
     <div class="summary-customer">
-      <p><strong>${name}</strong></p>
-      <p>${email}</p>
-      <p>${phone}</p>
+      <div class="summary-customer-row"><span class="summary-customer-label">Name</span><span>${name}</span></div>
+      <div class="summary-customer-row"><span class="summary-customer-label">Email</span><span>${email}</span></div>
+      <div class="summary-customer-row"><span class="summary-customer-label">Phone</span><span>${phone}</span></div>
+      ${position ? `<div class="summary-customer-row"><span class="summary-customer-label">Role</span><span>${position}</span></div>` : ''}
     </div>
+    <div class="summary-section-label">Items</div>
   `;
 
   let baseMin = 0;
@@ -1230,8 +1252,8 @@ function buildOrderSummary() {
   const subtotalMax = baseMax + embroideryTotal + logoTotal + foldingTotal;
   const taxMin = subtotalMin * TAX_RATE;
   const taxMax = subtotalMax * TAX_RATE;
-  const stripeFeeMin = ((subtotalMin + taxMin) * STRIPE_PERCENT) + STRIPE_FIXED;
-  const stripeFeeMax = ((subtotalMax + taxMax) * STRIPE_PERCENT) + STRIPE_FIXED;
+  const stripeFeeMin = ((subtotalMin + taxMin + SHIPPING_FEE) * STRIPE_PERCENT) + STRIPE_FIXED;
+  const stripeFeeMax = ((subtotalMax + taxMax + SHIPPING_FEE) * STRIPE_PERCENT) + STRIPE_FIXED;
   const totalMin = subtotalMin + taxMin + stripeFeeMin + SHIPPING_FEE;
   const totalMax = subtotalMax + taxMax + stripeFeeMax + SHIPPING_FEE;
 
@@ -1244,6 +1266,7 @@ function buildOrderSummary() {
     : '';
 
   html += `
+    <div class="summary-section-label">Price Estimate</div>
     <div class="summary-fees">
       <div class="summary-fee-row">
         <span>Items subtotal</span>
@@ -1259,16 +1282,16 @@ function buildOrderSummary() {
         <span>$${foldingTotal.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
+        <span>Shipping</span>
+        <span>$${SHIPPING_FEE.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
         <span>Sales tax (${(TAX_RATE * 100).toFixed(2)}%)</span>
         <span>$${taxMin.toFixed(2)}–$${taxMax.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
         <span>Payment processing (2.9% + $0.30)</span>
         <span>$${stripeFeeMin.toFixed(2)}–$${stripeFeeMax.toFixed(2)}</span>
-      </div>
-      <div class="summary-fee-row">
-        <span>Shipping</span>
-        <span>$${SHIPPING_FEE.toFixed(2)}</span>
       </div>
     </div>
     <div class="summary-total">
