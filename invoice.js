@@ -268,7 +268,7 @@ async function main() {
     const unitPrice = pricing.products[product]?.[tier] || 0;
     console.log(`  ${product} (${color}): ${count} pcs @ $${unitPrice.toFixed(2)} [${getTierLabel(tier, pricing.tiers)}]`);
   }
-  console.log(`  Embroidery fee: $${pricing.embroideryFee.toFixed(2)} per item`);
+  console.log(`  Name embroidery fee: $${pricing.embroideryFee.toFixed(2)} per item`);
   console.log(`  Logo embroidery fee: $${pricing.logoFee.toFixed(2)} per item`);
   console.log(`  Bag and folding fee: $${pricing.foldingFee.toFixed(2)} per item`);
   console.log(`  Shipping fee: $${pricing.shippingFee.toFixed(2)} per order`);
