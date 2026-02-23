@@ -2,851 +2,665 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMC EM Patagonia Order Form 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F2F2F7">
+<title>CMC EM Patagonia Order 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ios: {
+          bg: '#F2F2F7',
+          card: '#FFFFFF',
+          tint: '#009CA6',
+          'tint-dark': '#007A82',
+          destructive: '#FF3B30',
+          green: '#34C759',
+          separator: 'rgba(60, 60, 67, 0.18)',
+          label: '#000000',
+          'label-secondary': 'rgba(60, 60, 67, 0.6)',
+          'label-tertiary': 'rgba(60, 60, 67, 0.3)',
+          fill: 'rgba(120, 120, 128, 0.12)',
+          'gray-4': '#D1D1D6',
+          'gray-5': '#E5E5EA',
+        }
+      }
+    }
+  }
+}
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #f5f0eb;
-    --surface: #ffffff;
-    --border: #d4cdc4;
-    --border-focus: #009CA6;
-    --text: #1a1a1a;
-    --text-muted: #6b6560;
-    --accent: #009CA6;          /* Pantone 321C */
-    --accent-hover: #007A82;
-    --danger: #b5403a;
-    --danger-hover: #943330;
-    --tag-bg: #e8e2da;
-    --radius: 8px;
-    --font-body: 'DM Sans', sans-serif;
-    --font-heading: 'Source Serif 4', Georgia, serif;
-  }
-
-  html { font-size: 16px; }
+  html { scroll-behavior: smooth; }
 
   body {
-    font-family: var(--font-body);
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
+    background: #F2F2F7;
+    color: #000;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
   }
 
-  .page-wrapper {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
+  /* iOS text styles */
+  .text-ios-large-title { font-size: 34px; line-height: 41px; letter-spacing: -0.4px; font-weight: 700; }
+  .text-ios-title1 { font-size: 28px; line-height: 34px; letter-spacing: 0.36px; font-weight: 400; }
+  .text-ios-title2 { font-size: 22px; line-height: 28px; letter-spacing: -0.26px; font-weight: 400; }
+  .text-ios-title3 { font-size: 20px; line-height: 25px; letter-spacing: -0.45px; font-weight: 400; }
+  .text-ios-headline { font-size: 17px; line-height: 22px; letter-spacing: -0.41px; font-weight: 600; }
+  .text-ios-body { font-size: 17px; line-height: 22px; letter-spacing: -0.41px; font-weight: 400; }
+  .text-ios-callout { font-size: 16px; line-height: 21px; letter-spacing: -0.32px; font-weight: 400; }
+  .text-ios-subheadline { font-size: 15px; line-height: 20px; letter-spacing: -0.24px; font-weight: 400; }
+  .text-ios-footnote { font-size: 13px; line-height: 18px; letter-spacing: -0.08px; font-weight: 400; }
+  .text-ios-caption1 { font-size: 12px; line-height: 16px; letter-spacing: 0px; font-weight: 400; }
+  .text-ios-caption2 { font-size: 11px; line-height: 13px; letter-spacing: 0.07px; font-weight: 400; }
+
+  /* Section headers - iOS grouped list style */
+  .section-header {
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: rgba(60, 60, 67, 0.6);
+    font-weight: 400;
+    padding: 0 16px;
+    margin-bottom: 6px;
   }
 
-  /* ── Header ── */
-  .page-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
+  /* Glassmorphism */
+  .glass {
+    background: rgba(249, 249, 249, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
-  .page-header h1 {
-    font-family: var(--font-heading);
-    font-size: 1.85rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.35rem;
+  .glass-bottom {
+    background: rgba(242, 242, 247, 0.94);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
-  .page-header .subtitle {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-  }
-
-  /* ── Sections ── */
-  .form-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .form-section h2 {
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-  }
-
-  /* ── Form controls ── */
-  .field { margin-bottom: 1rem; }
-  .field:last-child { margin-bottom: 0; }
-
-  .field label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    color: var(--text);
-  }
-
-  .field label .req { color: var(--danger); margin-left: 2px; }
-
-  .field-hint {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-bottom: 0.3rem;
-    font-style: italic;
-  }
-
-  input[type="text"],
-  input[type="tel"],
-  input[type="email"],
-  select {
+  /* Form controls */
+  select, input[type="text"], input[type="tel"], input[type="email"] {
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.41px;
+    color: #000;
+    background: transparent;
+    border: none;
+    outline: none;
     width: 100%;
-    padding: 0.55rem 0.75rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: #fff;
-    color: var(--text);
-    transition: border-color 0.15s;
+    padding: 0;
     appearance: none;
     -webkit-appearance: none;
   }
 
   select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%236b6560' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23C7C7CC' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    padding-right: 2.25rem;
+    background-position: right 0px center;
+    padding-right: 18px;
   }
 
-  input:focus, select:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(0, 156, 166, 0.1);
+  select.placeholder { color: rgba(60, 60, 67, 0.3); }
+  select option { color: #000; }
+
+  input::placeholder {
+    color: rgba(60, 60, 67, 0.3);
   }
 
-  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
-
-  @media (max-width: 520px) {
-    .row-2, .row-3 { grid-template-columns: 1fr; }
-  }
-
-  /* ── Item cards ── */
-  #itemsContainer {
-    max-height: 60vh;
-    overflow-y: auto;
-    padding-right: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  #itemsContainer::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  #itemsContainer::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  #itemsContainer::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
-
-  #itemsContainer::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
-  }
-
-  .item-card {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-    position: relative;
-    background: #fafaf8;
-  }
-
-  .item-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    gap: 0.5rem;
-  }
-
-  .item-card-header h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .item-card-header .item-title {
-    flex: 1;
-  }
-
-  .item-card-header .item-title small {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 400;
-    color: var(--text-muted);
-    margin-top: 0.15rem;
-  }
-
-  .item-price-estimate {
-    font-size: 0.8rem;
-    color: var(--accent);
-    font-weight: 600;
-    background: rgba(0, 156, 166, 0.08);
-    padding: 0.25rem 0.5rem;
+  /* Focus styles */
+  input:focus-visible, select:focus-visible {
+    background: rgba(0, 156, 166, 0.04);
     border-radius: 4px;
-    white-space: nowrap;
+    margin: -2px;
+    padding: 2px;
   }
 
-  .btn-remove {
-    background: none;
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 0.3rem 0.65rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.15s;
+  /* Card rows */
+  .card-row {
+    padding: 12px 16px;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card-row + .card-row {
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin-left: 16px;
+    padding-left: 0;
+  }
+
+  .card-row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 44px;
+  }
+
+  .card-row-split > * {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card-row-split > *:first-child {
+    border-right: 1px solid rgba(60, 60, 67, 0.18);
+  }
+
+  /* Inset separator for split rows after a card-row */
+  .card-row + .card-row-split {
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin-left: 16px;
+  }
+
+  .card-row-split + .card-row {
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin-left: 16px;
+    padding-left: 0;
+  }
+
+  .card-row-split + .card-row-split {
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin-left: 16px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    line-height: 18px;
+    color: rgba(60, 60, 67, 0.6);
+    margin-bottom: 4px;
+  }
+
+  .field-label .req { color: #FF3B30; }
+
+  /* Invalid state */
+  .card-row.invalid, .card-row-split > .invalid {
+    background: rgba(255, 59, 48, 0.04);
+  }
+
+  .card-row.invalid .field-label,
+  .card-row-split > .invalid .field-label {
+    color: #FF3B30;
+  }
+
+  /* Animations */
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-slide-right { animation: slideInRight 0.3s ease; }
+  .animate-slide-left { animation: slideInLeft 0.3s ease; }
+  .animate-fade-in { animation: fadeIn 0.3s ease; }
+
+  /* Horizontal scroll container */
+  .scroll-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px 12px;
+    scrollbar-width: none;
+  }
+
+  .scroll-row::-webkit-scrollbar { display: none; }
+
+  .scroll-row > * {
+    scroll-snap-align: start;
     flex-shrink: 0;
   }
 
-  .btn-remove:hover { background: var(--danger); color: #fff; }
-
-  /* ── Color swatch ── */
-  .color-field-wrapper {
-    position: relative;
+  /* Touch targets */
+  button, [role="button"] {
+    touch-action: manipulation;
   }
 
-  .color-swatch {
-    position: absolute;
-    left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    pointer-events: none;
-    display: none;
-  }
-
-  .color-swatch.visible {
-    display: block;
-  }
-
-  .color-field-wrapper select {
-    padding-left: 2.25rem;
-  }
-
-  .color-field-wrapper select:not(.has-color) {
-    padding-left: 0.75rem;
-  }
-
-  /* ── Buttons ── */
-  .btn-add {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: none;
-    border: 1px dashed var(--accent);
-    color: var(--accent);
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    font-weight: 600;
-    padding: 0.6rem 1.1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-top: 0.5rem;
-  }
-
-  .btn-add:hover { background: rgba(0,156,166,0.06); }
-
-  .btn-submit {
-    display: block;
-    width: 100%;
-    padding: 0.85rem;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    background: var(--accent);
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .btn-submit:hover { background: var(--accent-hover); }
-  .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
-
-  /* ── FAQ ── */
-  .faq-section { margin-bottom: 1.25rem; }
-
-  .faq-section details {
-    border-bottom: 1px solid var(--border);
-    padding: 0.85rem 0;
-  }
-
-  .faq-section details:last-child { border-bottom: none; }
-
-  .faq-section summary {
-    font-weight: 600;
-    font-size: 0.88rem;
-    cursor: pointer;
-    list-style: none;
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 500;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    padding: 16px;
   }
 
-  .faq-section summary::-webkit-details-marker { display: none; }
+  .lightbox.open { opacity: 1; visibility: visible; }
 
-  .faq-section summary::after {
-    content: '+';
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--text-muted);
-    transition: transform 0.2s;
+  .lightbox img {
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: 10px;
   }
 
-  .faq-section details[open] summary::after {
-    content: '−';
-  }
-
-  .faq-answer {
-    margin-top: 0.65rem;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.65;
-  }
-
-  .faq-answer table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0.5rem 0;
-    font-size: 0.82rem;
-  }
-
-  .faq-answer th, .faq-answer td {
-    text-align: left;
-    padding: 0.35rem 0.65rem;
-    border: 1px solid var(--border);
-  }
-
-  .faq-answer th {
-    background: var(--tag-bg);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  /* ── Feedback ── */
+  /* Toast */
   .toast {
     position: fixed;
-    bottom: 1.5rem;
+    bottom: max(100px, calc(80px + env(safe-area-inset-bottom)));
     left: 50%;
-    transform: translateX(-50%) translateY(1rem);
-    background: var(--accent);
+    transform: translateX(-50%) translateY(12px);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     color: #fff;
-    padding: 0.85rem 1.5rem;
-    border-radius: var(--radius);
-    font-size: 0.9rem;
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 500;
+    letter-spacing: -0.24px;
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 600;
     text-align: center;
     max-width: 90vw;
   }
 
-  .toast.error { background: var(--danger); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-
-  .field.invalid input,
-  .field.invalid select {
-    border-color: var(--danger);
-    box-shadow: 0 0 0 3px rgba(181,64,58,0.1);
+  .toast.error {
+    background: rgba(255, 59, 48, 0.9);
   }
 
-  /* ── Reference Images ── */
-  .ref-images {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .ref-card {
-    background: #fafaf8;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.2s, border-color 0.2s;
-  }
-
-  .ref-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-
-  .ref-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .ref-card-label {
-    padding: 0.6rem 0.75rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text);
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .ref-card-label span {
-    color: var(--text-muted);
-    font-weight: 400;
-    font-size: 0.75rem;
-  }
-
-  /* ── Lightbox ── */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s, visibility 0.25s;
-    padding: 1rem;
-  }
-
-  .lightbox.open {
+  .toast.show {
     opacity: 1;
-    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
   }
 
-  .lightbox img {
-    max-width: 100%;
-    max-height: 90vh;
-    border-radius: var(--radius);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 2rem;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.15s;
-    line-height: 1;
-  }
-
-  .lightbox-close:hover { opacity: 1; }
-
-  .lightbox-caption {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  /* ── Order Summary Modal ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 300;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s, visibility 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .modal-overlay.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .modal {
-    background: var(--surface);
-    border-radius: var(--radius);
-    max-width: 500px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.2);
-  }
-
-  .modal-header {
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .modal-header h3 {
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
-    font-weight: 600;
-  }
-
-  .modal-body {
-    padding: 1.25rem 1.5rem;
-  }
-
-  .summary-customer {
-    margin-bottom: 1.25rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .summary-customer-row {
-    display: flex;
-    gap: 0.75rem;
-    font-size: 0.88rem;
-    margin-bottom: 0.2rem;
-    align-items: baseline;
-  }
-
-  .summary-customer-row:last-child { margin-bottom: 0; }
-
-  .summary-customer-label {
-    color: var(--text-muted);
-    font-size: 0.78rem;
-    min-width: 42px;
-  }
-
-  .summary-section-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin: 0.75rem 0 0.4rem;
-  }
-
-  .summary-item {
-    background: #fafaf8;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.85rem 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .summary-item:last-of-type {
-    margin-bottom: 1.25rem;
-  }
-
-  .summary-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.35rem;
-  }
-
-  .summary-item-title {
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  .summary-item-price {
-    font-size: 0.82rem;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .summary-item-details {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .summary-item-details span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .summary-item-details .mini-swatch {
-    width: 10px;
-    height: 10px;
+  /* Color dot */
+  .color-dot {
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    border: 1px solid var(--border);
-    display: inline-block;
+    border: 1px solid rgba(60, 60, 67, 0.18);
+    display: none;
+    flex-shrink: 0;
   }
 
-  .summary-fees {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0 1rem;
-    margin-bottom: 1rem;
-    background: #fafaf8;
+  .color-dot.visible { display: block; }
+
+  /* FAQ details */
+  details summary {
+    list-style: none;
+    cursor: pointer;
   }
 
-  .summary-fee-row {
+  details summary::-webkit-details-marker { display: none; }
+
+  /* Review summary rows */
+  .summary-row {
     display: flex;
     justify-content: space-between;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+    padding: 10px 16px;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: -0.24px;
   }
 
-  .summary-fee-row:last-child {
-    border-bottom: none;
+  .summary-row + .summary-row {
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin-left: 16px;
+    padding-left: 0;
   }
 
-  .summary-total {
-    background: var(--tag-bg);
-    border-radius: 6px;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .summary-row-label { color: rgba(60, 60, 67, 0.6); }
+  .summary-row-value { font-weight: 400; text-align: right; }
 
-  .summary-total-label {
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
+  @media (min-width: 1024px) {
+    .scroll-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: visible;
+      padding: 0;
+    }
 
-  .summary-total-label small {
-    display: block;
-    font-weight: 400;
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    .scroll-row > * {
+      width: auto !important;
+    }
   }
-
-  .summary-total-amount {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--accent);
-  }
-
-  .modal-footer {
-    padding: 1rem 1.5rem 1.25rem;
-    display: flex;
-    gap: 0.75rem;
-  }
-
-  .btn-secondary {
-    flex: 1;
-    padding: 0.7rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .btn-secondary:hover {
-    background: var(--tag-bg);
-  }
-
-  .btn-primary {
-    flex: 1;
-    padding: 0.7rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #fff;
-    background: var(--accent);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .btn-primary:hover { background: var(--accent-hover); }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
 </style>
 </head>
 <body>
 
-<div class="page-wrapper">
-  <header class="page-header">
-    <h1>CMC EM Patagonia Order 2026</h1>
-    <p class="subtitle">Better Sweater® Collection — Custom Embroidered</p>
-  </header>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LANDING VIEW                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="landingView">
+  <div class="max-w-2xl mx-auto px-4 pt-14 pb-24">
 
-  <!-- FAQ -->
-  <section class="form-section faq-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <details>
-      <summary>How much do the items cost?</summary>
-      <div class="faq-answer">
-        Pricing depends on total order volume. Below are the per-unit rates at various quantity tiers:
-        <table>
-          <tr><th>Product</th><th>6 pcs</th><th>18 pcs</th><th>50 pcs</th><th>72 pcs</th></tr>
-          <tr><td>Jacket (Full Zip)</td><td>$175</td><td>$173.58</td><td>$162.68</td><td>$159.68</td></tr>
-          <tr><td>Quarter Zip</td><td>$155</td><td>$152</td><td>$142.68</td><td>$139.58</td></tr>
-          <tr><td>Vest</td><td>$132.88</td><td>$131.28</td><td>$123.58</td><td>$119.88</td></tr>
-        </table>
-        A $10 logo embroidery fee, $1.25 bag and folding fee, and 7.25% NC sales tax are added per item, plus a $2.00 shipping fee per order. Final pricing will be communicated once all orders are in.
-      </div>
-    </details>
-
-    <details>
-      <summary>How much does name embroidery cost?</summary>
-      <div class="faq-answer">
-        Name embroidery costs $8 per item.
-      </div>
-    </details>
-
-    <details>
-      <summary>How do I send payment?</summary>
-      <div class="faq-answer">
-        Once all orders are received, you will be emailed an invoice with your total and payment instructions. NC sales tax (7.25%) and a payment processing fee (2.9% + $0.30) will be included in your invoice total.
-      </div>
-    </details>
-
-    <details>
-      <summary>How do I pick up my order?</summary>
-      <div class="faq-answer">
-        Orders will be shipped to the 3rd Floor MEB building at CMC Main. You will be responsible for picking up your individual order. The exact pickup location will be sent via email once the order arrives.
-      </div>
-    </details>
-
-    <details>
-      <summary>What is the return/refund policy?</summary>
-      <div class="faq-answer">
-        There are no returns on embroidered items. Refunds are only issued for quality control issues deemed to be the vendor's fault. Please double-check your size and that your name/title is typed exactly as you want it embroidered.
-      </div>
-    </details>
-  </section>
-
-  <!-- Reference Images -->
-  <section class="form-section">
-    <h2>Product Reference</h2>
-    <div class="ref-images">
-      <div class="ref-card" onclick="openLightbox('products')">
-        <img src="images/products.jpg" alt="Product Options" loading="lazy">
-        <div class="ref-card-label">Products <span>Click to enlarge</span></div>
-      </div>
-      <div class="ref-card" onclick="openLightbox('colors')">
-        <img src="images/colors.jpg" alt="Color Options" loading="lazy">
-        <div class="ref-card-label">Colors <span>Click to enlarge</span></div>
-      </div>
-      <div class="ref-card" onclick="openLightbox('logos')">
-        <img src="images/logos.jpg" alt="Logo Options" loading="lazy">
-        <div class="ref-card-label">Logos <span>Click to enlarge</span></div>
-      </div>
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <p class="text-ios-footnote text-ios-label-secondary uppercase tracking-widest mb-2">2026 Collection</p>
+      <h1 class="text-ios-large-title mb-2">CMC EM Patagonia</h1>
+      <p class="text-ios-body text-ios-label-secondary">Better Sweater<sup>&reg;</sup> &middot; Custom Embroidered</p>
+      <div id="heroDeadline" class="mt-4"></div>
     </div>
-  </section>
 
-  <!-- Form -->
-  <form id="orderForm" novalidate>
-
-    <!-- Personal info -->
-    <section class="form-section">
-      <h2>Your Information</h2>
-      <div class="field">
-        <label>Full Name <span class="req">*</span></label>
-        <input type="text" id="personName" required>
-      </div>
-      <div class="row-2">
-        <div class="field">
-          <label>Phone <span class="req">*</span></label>
-          <input type="tel" id="personPhone" required>
+    <!-- Product Reference -->
+    <div class="mb-8 animate-fade-in" style="animation-delay: 0.1s">
+      <p class="section-header">PRODUCT REFERENCE</p>
+      <div class="flex flex-col gap-3 px-4 lg:flex-row lg:gap-4 lg:px-0">
+        <div onclick="openLightbox('products')" class="bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col lg:flex-1" role="button">
+          <div class="aspect-[2/1] lg:aspect-[4/3] overflow-hidden"><img src="images/products.jpg" alt="Product Options" loading="lazy" class="w-full h-full object-cover"></div>
+          <div class="px-3 py-2.5 flex justify-between items-center mt-auto">
+            <span class="text-ios-subheadline font-medium">Products</span>
+            <span class="text-ios-caption1 text-ios-label-secondary">Tap to enlarge</span>
+          </div>
         </div>
-        <div class="field">
-          <label>Email <span class="req">*</span></label>
-          <input type="email" id="personEmail" required>
+        <div onclick="openLightbox('colors')" class="bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col lg:flex-1" role="button">
+          <div class="aspect-[2/1] lg:aspect-[4/3] overflow-hidden"><img src="images/colors.jpg" alt="Color Options" loading="lazy" class="w-full h-full object-cover"></div>
+          <div class="px-3 py-2.5 flex justify-between items-center mt-auto">
+            <span class="text-ios-subheadline font-medium">Colors</span>
+            <span class="text-ios-caption1 text-ios-label-secondary">Tap to enlarge</span>
+          </div>
+        </div>
+        <div onclick="openLightbox('logos')" class="bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col lg:flex-1" role="button">
+          <div class="aspect-[2/1] lg:aspect-[4/3] overflow-hidden bg-black"><img src="images/logos.jpg" alt="Logo Options" loading="lazy" class="w-full h-full object-contain"></div>
+          <div class="px-3 py-2.5 flex justify-between items-center mt-auto">
+            <span class="text-ios-subheadline font-medium">Logos</span>
+            <span class="text-ios-caption1 text-ios-label-secondary">Tap to enlarge</span>
+          </div>
         </div>
       </div>
-      <div class="field">
-        <label>Position / Occupation <span class="req">*</span></label>
-        <select id="personPosition" required>
-          <option value="">Select…</option>
-          <option>Attending</option>
-          <option>Fellow</option>
-          <option>Resident</option>
-          <option>APP</option>
-          <option>Nurse</option>
-          <option>Tech</option>
-          <option>EMS</option>
-          <option>Administrative Faculty</option>
-        </select>
-      </div>
-    </section>
-
-    <!-- Items -->
-    <section class="form-section">
-      <h2>Items <span id="itemsCount" style="font-weight: 400; color: var(--text-muted);"></span></h2>
-      <div id="itemsContainer"></div>
-      <button type="button" class="btn-add" id="addItemBtn">+ Add another item</button>
-    </section>
-
-    <button type="submit" class="btn-submit" id="submitBtn">Review Order</button>
-  </form>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
-  <img id="lightboxImg" src="" alt="">
-  <div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
-
-<!-- Order Summary Modal -->
-<div class="modal-overlay" id="summaryModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>Review Your Order</h3>
     </div>
-    <div class="modal-body" id="summaryBody"></div>
-    <div class="modal-footer">
-      <button type="button" class="btn-secondary" id="summaryBack">Go Back</button>
-      <button type="button" class="btn-primary" id="summaryConfirm">Submit Order</button>
+
+    <!-- FAQ -->
+    <div class="mb-8 animate-fade-in" style="animation-delay: 0.15s">
+      <p class="section-header">FREQUENTLY ASKED QUESTIONS</p>
+      <div class="bg-white rounded-[10px] overflow-hidden">
+
+        <details class="group">
+          <summary class="flex items-center justify-between px-4 min-h-[44px] py-3 active:bg-[#D1D1D6] transition-colors">
+            <span class="text-ios-body pr-4">How much do the items cost?</span>
+            <svg class="w-4 h-4 text-ios-label-tertiary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="px-4 pb-3 text-ios-subheadline text-ios-label-secondary">
+            <p class="mb-2">Pricing depends on total order volume:</p>
+            <div class="overflow-x-auto -mx-1">
+              <table class="w-full text-ios-caption1 border-collapse">
+                <tr>
+                  <th class="text-left py-1.5 px-2 bg-ios-bg font-semibold text-ios-label rounded-tl-md">Product</th>
+                  <th class="py-1.5 px-2 bg-ios-bg font-semibold text-ios-label text-right">6 pcs</th>
+                  <th class="py-1.5 px-2 bg-ios-bg font-semibold text-ios-label text-right">18 pcs</th>
+                  <th class="py-1.5 px-2 bg-ios-bg font-semibold text-ios-label text-right">50 pcs</th>
+                  <th class="py-1.5 px-2 bg-ios-bg font-semibold text-ios-label text-right rounded-tr-md">72 pcs</th>
+                </tr>
+                <tr class="border-t border-ios-separator">
+                  <td class="py-1.5 px-2">Jacket</td>
+                  <td class="py-1.5 px-2 text-right">$175</td>
+                  <td class="py-1.5 px-2 text-right">$173.58</td>
+                  <td class="py-1.5 px-2 text-right">$162.68</td>
+                  <td class="py-1.5 px-2 text-right">$159.68</td>
+                </tr>
+                <tr class="border-t border-ios-separator">
+                  <td class="py-1.5 px-2">Quarter Zip</td>
+                  <td class="py-1.5 px-2 text-right">$155</td>
+                  <td class="py-1.5 px-2 text-right">$152</td>
+                  <td class="py-1.5 px-2 text-right">$142.68</td>
+                  <td class="py-1.5 px-2 text-right">$139.58</td>
+                </tr>
+                <tr class="border-t border-ios-separator">
+                  <td class="py-1.5 px-2">Vest</td>
+                  <td class="py-1.5 px-2 text-right">$132.88</td>
+                  <td class="py-1.5 px-2 text-right">$131.28</td>
+                  <td class="py-1.5 px-2 text-right">$123.58</td>
+                  <td class="py-1.5 px-2 text-right">$119.88</td>
+                </tr>
+              </table>
+            </div>
+            <p class="mt-2">A $10 logo embroidery fee, $1.25 bag &amp; folding fee, and 7.25% NC sales tax are added per item, plus a $2.00 shipping fee per order.</p>
+          </div>
+        </details>
+
+        <details class="group border-t border-ios-separator ml-4">
+          <summary class="flex items-center justify-between pr-4 min-h-[44px] py-3 active:bg-[#D1D1D6] transition-colors">
+            <span class="text-ios-body pr-4">How much does name embroidery cost?</span>
+            <svg class="w-4 h-4 text-ios-label-tertiary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="pr-4 pb-3 text-ios-subheadline text-ios-label-secondary">
+            Name embroidery costs $8 per item.
+          </div>
+        </details>
+
+        <details class="group border-t border-ios-separator ml-4">
+          <summary class="flex items-center justify-between pr-4 min-h-[44px] py-3 active:bg-[#D1D1D6] transition-colors">
+            <span class="text-ios-body pr-4">How do I send payment?</span>
+            <svg class="w-4 h-4 text-ios-label-tertiary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="pr-4 pb-3 text-ios-subheadline text-ios-label-secondary">
+            Once all orders are received, you will be emailed an invoice with your total and payment instructions. NC sales tax (7.25%) and a payment processing fee (2.9% + $0.30) will be included. <span class="deadline-text"></span>
+          </div>
+        </details>
+
+        <details class="group border-t border-ios-separator ml-4">
+          <summary class="flex items-center justify-between pr-4 min-h-[44px] py-3 active:bg-[#D1D1D6] transition-colors">
+            <span class="text-ios-body pr-4">How do I pick up my order?</span>
+            <svg class="w-4 h-4 text-ios-label-tertiary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="pr-4 pb-3 text-ios-subheadline text-ios-label-secondary">
+            Orders will be shipped to the 3rd Floor MEB building at CMC Main. You will be responsible for picking up your individual order. The exact pickup location will be sent via email once the order arrives.
+          </div>
+        </details>
+
+        <details class="group border-t border-ios-separator ml-4">
+          <summary class="flex items-center justify-between pr-4 min-h-[44px] py-3 active:bg-[#D1D1D6] transition-colors">
+            <span class="text-ios-body pr-4">What is the return/refund policy?</span>
+            <svg class="w-4 h-4 text-ios-label-tertiary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="pr-4 pb-3 text-ios-subheadline text-ios-label-secondary">
+            There are no returns on embroidered items. Refunds are only issued for quality control issues deemed to be the vendor's fault. Please double-check your size and that your name/title is typed exactly as you want it embroidered.
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- Contact footer -->
+    <div class="text-center pt-4 pb-8">
+      <p class="text-ios-footnote text-ios-label-secondary">Questions? <a href="mailto:Daniel.Evans@advocatehealth.org" class="text-ios-tint">Daniel.Evans@advocatehealth.org</a></p>
+    </div>
+
+  </div>
+
+  <!-- Sticky bottom CTA (mobile) / inline (desktop) -->
+  <div class="fixed bottom-0 left-0 right-0 glass-bottom border-t border-ios-separator z-40">
+    <div class="max-w-2xl mx-auto px-4 py-3" style="padding-bottom: max(12px, env(safe-area-inset-bottom));">
+      <p class="text-center text-ios-caption1 text-ios-tint font-medium mb-2 deadline-text"></p>
+      <button onclick="startOrder()" class="w-full bg-ios-tint text-white rounded-[12px] h-[50px] text-ios-headline tracking-[-0.41px] active:bg-ios-tint-dark transition-colors">
+        Start Order
+      </button>
     </div>
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- WIZARD VIEW                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="wizardView" class="hidden">
+
+  <!-- Sticky Nav Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-ios-separator" style="padding-top: env(safe-area-inset-top);">
+    <div class="h-[44px] max-w-2xl mx-auto px-4 flex items-center relative">
+      <button id="navBack" onclick="goBack()" class="flex items-center gap-0.5 text-ios-tint text-ios-body min-w-[44px] min-h-[44px] active:opacity-50 z-10">
+        <svg width="12" height="20" viewBox="0 0 12 20" fill="none" class="flex-shrink-0">
+          <path d="M10 2L2 10L10 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="navBackLabel" class="text-ios-body">Back</span>
+      </button>
+      <h2 id="navTitle" class="text-ios-headline absolute left-1/2 -translate-x-1/2 whitespace-nowrap">Your Information</h2>
+      <div id="stepIndicator" class="ml-auto flex gap-1.5 z-10">
+        <div class="w-2 h-2 rounded-full bg-ios-tint transition-colors"></div>
+        <div class="w-2 h-2 rounded-full bg-ios-gray-4 transition-colors"></div>
+        <div class="w-2 h-2 rounded-full bg-ios-gray-4 transition-colors"></div>
+      </div>
+    </div>
+    <div class="h-[2px] bg-ios-gray-5">
+      <div id="progressBar" class="h-full bg-ios-tint transition-all duration-500 ease-out" style="width: 33.33%"></div>
+    </div>
+  </nav>
+
+  <div class="wizard-content" style="padding-top: calc(46px + env(safe-area-inset-top)); padding-bottom: calc(84px + env(safe-area-inset-bottom));">
+
+    <!-- ─── Step 1: Your Information ─── -->
+    <div id="step1" class="wizard-step">
+      <div class="max-w-2xl mx-auto px-4 pt-6">
+
+        <p class="section-header">CONTACT DETAILS</p>
+        <div class="bg-white rounded-[10px] overflow-hidden">
+          <div class="card-row" data-validate="personName">
+            <label class="field-label" for="personName">Full Name <span class="req">*</span></label>
+            <input type="text" id="personName" placeholder="Jane Smith" autocomplete="name">
+          </div>
+          <div class="card-row" data-validate="personEmail">
+            <label class="field-label" for="personEmail">Email <span class="req">*</span></label>
+            <input type="email" id="personEmail" placeholder="jane@example.com" autocomplete="email" inputmode="email">
+          </div>
+          <div class="card-row" data-validate="personEmailConfirm">
+            <label class="field-label" for="personEmailConfirm">Confirm Email <span class="req">*</span></label>
+            <input type="email" id="personEmailConfirm" placeholder="jane@example.com" autocomplete="email" inputmode="email">
+          </div>
+          <div class="card-row" data-validate="personPhone">
+            <label class="field-label" for="personPhone">Phone <span class="req">*</span></label>
+            <input type="tel" id="personPhone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="tel">
+          </div>
+          <div class="card-row" data-validate="personPosition">
+            <label class="field-label" for="personPosition">Position <span class="req">*</span></label>
+            <select id="personPosition">
+              <option value="">Select your role</option>
+              <option>Attending</option>
+              <option>Fellow</option>
+              <option>Resident</option>
+              <option>APP</option>
+              <option>Nurse</option>
+              <option>Tech</option>
+              <option>EMS</option>
+              <option>Administrative Faculty</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── Step 2: Items ─── -->
+    <div id="step2" class="wizard-step hidden">
+      <div class="max-w-2xl mx-auto px-4 pt-6">
+        <div id="itemsContainer"></div>
+
+        <button type="button" id="addItemBtn" onclick="createItemCard()" class="w-full min-h-[50px] rounded-[10px] border-2 border-dashed border-ios-tint/30 text-ios-tint text-ios-headline flex items-center justify-center gap-2 active:bg-ios-tint/5 transition-colors mt-2">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="9" y1="3" x2="9" y2="15"/>
+            <line x1="3" y1="9" x2="15" y2="9"/>
+          </svg>
+          Add Item
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── Step 3: Review ─── -->
+    <div id="step3" class="wizard-step hidden">
+      <div class="max-w-2xl mx-auto px-4 pt-6" id="reviewContent"></div>
+    </div>
+
+  </div>
+
+  <!-- Sticky bottom action bar -->
+  <div class="fixed bottom-0 left-0 right-0 glass-bottom border-t border-ios-separator z-40" style="padding-bottom: max(12px, env(safe-area-inset-bottom));">
+    <div class="max-w-2xl mx-auto px-4 py-3">
+      <button id="wizardAction" onclick="handleAction()" class="w-full bg-ios-tint text-white rounded-[12px] h-[50px] text-ios-headline tracking-[-0.41px] active:bg-ios-tint-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+        Continue
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SUCCESS VIEW                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="successView" class="hidden">
+  <div class="max-w-2xl mx-auto px-4 pt-20 pb-24 text-center">
+    <div class="animate-fade-in">
+      <div class="w-20 h-20 bg-ios-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h1 class="text-ios-large-title mb-2">Order Received!</h1>
+      <p id="successSummary" class="text-ios-body text-ios-label-secondary mb-8"></p>
+    </div>
+
+    <div class="bg-white rounded-[10px] p-5 text-left mb-6 animate-fade-in" style="animation-delay: 0.1s">
+      <p class="text-ios-headline mb-3">What happens next</p>
+      <div class="space-y-3 text-ios-subheadline text-ios-label-secondary">
+        <div class="flex gap-3">
+          <span class="text-ios-tint flex-shrink-0 mt-0.5">1.</span>
+          <span id="successInvoiceMsg"></span>
+        </div>
+        <div class="flex gap-3">
+          <span class="text-ios-tint flex-shrink-0 mt-0.5">2.</span>
+          <span>Pickup details will be sent separately once orders arrive.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-fade-in" style="animation-delay: 0.15s">
+      <p class="text-ios-footnote text-ios-label-secondary mb-6">Questions? <a href="mailto:Daniel.Evans@advocatehealth.org" class="text-ios-tint">Daniel.Evans@advocatehealth.org</a></p>
+      <button onclick="showLanding()" class="w-full bg-ios-tint text-white rounded-[12px] h-[50px] text-ios-headline tracking-[-0.41px] active:bg-ios-tint-dark transition-colors">
+        Done
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LIGHTBOX                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="absolute top-4 right-4 text-white/80 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center" onclick="closeLightbox(event)" style="padding-top: env(safe-area-inset-top);">
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <img id="lightboxImg" src="" alt="">
+  <div id="lightboxCaption" class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-ios-subheadline font-medium whitespace-nowrap"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
+// ─── CONFIG ──────────────────────────────────────────────────
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvKNB_4bAF4D8lajjPrX9AM0JiRIa7MJxFzKPAI0m-m284xIHafIID6hrWlahFQ6iXRQ/exec";
 
-// Fees
+const ORDER_DEADLINE = "March 7, 2026";
+const CONTACT_EMAIL = "Daniel.Evans@advocatehealth.org";
+
 const EMBROIDERY_FEE = 8.00;
 const LOGO_FEE = 10.00;
 const FOLDING_FEE = 1.25;
@@ -855,14 +669,12 @@ const TAX_RATE = 0.0725;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
 
-// Base product prices (min = 72+ tier, max = 6 tier)
 const PRICING = {
   "Better Sweater Jacket": { min: 159.68, max: 175.00, label: "Jacket" },
   "Better Sweater Vest": { min: 119.88, max: 132.88, label: "Vest" },
   "Better Sweater Quarter Zip": { min: 139.58, max: 155.00, label: "Quarter Zip" },
 };
 
-// Color swatches
 const COLOR_SWATCHES = {
   "Black": "#1a1a1a",
   "New Navy": "#1a2d47",
@@ -873,7 +685,7 @@ const COLOR_SWATCHES = {
 const REF_IMAGES = {
   products: { src: "images/products.jpg", caption: "Better Sweater® Jacket, Vest & Quarter Zip" },
   colors: { src: "images/colors.jpg", caption: "Available Colors by Style" },
-  logos: { src: "images/logos.jpg", caption: "Embroidered Logo Options" }
+  logos: { src: "images/logos.jpg", caption: "Embroidered Logo Options" },
 };
 
 const COLORS = {
@@ -895,9 +707,9 @@ const SIZES = {
 };
 
 const LOGOS = [
-  { value: "Option 1", label: "Original CMC Logo - Solid Teal (Option 1)" },
-  { value: "Option 2", label: "Original CMC Logo - Solid White (Option 2)" },
-  { value: "Option 3", label: "Skyline Logo - Teal and White (Option 3)" },
+  { value: "Option 1", label: "Original CMC Logo — Solid Teal (Option 1)" },
+  { value: "Option 2", label: "Original CMC Logo — Solid White (Option 2)" },
+  { value: "Option 3", label: "Skyline Logo — Teal and White (Option 3)" },
 ];
 
 const THREAD_COLORS = [
@@ -905,135 +717,242 @@ const THREAD_COLORS = [
   { value: "White", label: "White" },
 ];
 
+// ─── STATE ───────────────────────────────────────────────────
+let currentStep = 0;
 let itemCount = 0;
+let pendingPayload = null;
 
-// ─── Lightbox ─────────────────────────────────────────────────────────────────
+// ─── NAVIGATION ──────────────────────────────────────────────
 
-function openLightbox(key) {
-  const data = REF_IMAGES[key];
-  document.getElementById("lightboxImg").src = data.src;
-  document.getElementById("lightboxCaption").textContent = data.caption;
-  document.getElementById("lightbox").classList.add("open");
-  document.body.style.overflow = "hidden";
+function showLanding(pushState = true) {
+  currentStep = 0;
+  document.getElementById("landingView").classList.remove("hidden");
+  document.getElementById("wizardView").classList.add("hidden");
+  document.getElementById("successView").classList.add("hidden");
+  if (pushState) history.pushState({ step: 0 }, "", window.location.pathname);
+  window.scrollTo(0, 0);
 }
 
-function closeLightbox(e) {
-  if (e.target.id === "lightbox" || e.target.classList.contains("lightbox-close")) {
-    document.getElementById("lightbox").classList.remove("open");
-    document.body.style.overflow = "";
+function startOrder() {
+  currentStep = 1;
+  document.getElementById("landingView").classList.add("hidden");
+  document.getElementById("wizardView").classList.remove("hidden");
+  goToStep(1);
+}
+
+function goToStep(step, pushState = true) {
+  const prev = currentStep;
+  currentStep = step;
+
+  // Show/hide steps
+  document.querySelectorAll(".wizard-step").forEach(s => s.classList.add("hidden"));
+  const stepEl = document.getElementById(`step${step}`);
+  stepEl.classList.remove("hidden");
+
+  // Animate direction
+  stepEl.classList.remove("animate-slide-right", "animate-slide-left", "animate-fade-in");
+  if (step > prev) {
+    stepEl.classList.add("animate-slide-right");
+  } else if (step < prev) {
+    stepEl.classList.add("animate-slide-left");
+  } else {
+    stepEl.classList.add("animate-fade-in");
+  }
+
+  // Update nav
+  updateNav(step);
+
+  // Build review on step 3
+  if (step === 3) buildOrderSummary();
+
+  if (pushState) history.pushState({ step }, "", `#step${step}`);
+  window.scrollTo(0, 0);
+}
+
+function updateNav(step) {
+  const titles = { 1: "Your Information", 2: "Your Items", 3: "Review Order" };
+  const backLabels = { 1: "Home", 2: "Back", 3: "Back" };
+  const actions = { 1: "Continue", 2: "Review Order", 3: "Submit Order" };
+
+  document.getElementById("navTitle").textContent = titles[step];
+  document.getElementById("navBackLabel").textContent = backLabels[step];
+  document.getElementById("wizardAction").textContent = actions[step];
+  document.getElementById("progressBar").style.width = `${(step / 3) * 100}%`;
+
+  // Update step dots
+  const dots = document.querySelectorAll("#stepIndicator > div");
+  dots.forEach((dot, i) => {
+    dot.className = `w-2 h-2 rounded-full transition-colors ${i < step ? "bg-ios-tint" : "bg-ios-gray-4"}`;
+  });
+}
+
+function goBack() {
+  if (currentStep === 1) {
+    showLanding();
+  } else {
+    goToStep(currentStep - 1);
   }
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    document.getElementById("lightbox").classList.remove("open");
-    document.getElementById("summaryModal").classList.remove("open");
-    document.body.style.overflow = "";
+function handleAction() {
+  if (currentStep === 1) {
+    if (validateStep1()) goToStep(2);
+  } else if (currentStep === 2) {
+    if (validateStep2()) goToStep(3);
+  } else if (currentStep === 3) {
+    submitOrder();
+  }
+}
+
+// Browser back button
+window.addEventListener("popstate", (e) => {
+  if (e.state?.step > 0) {
+    document.getElementById("landingView").classList.add("hidden");
+    document.getElementById("wizardView").classList.remove("hidden");
+    goToStep(e.state.step, false);
+  } else {
+    showLanding(false);
   }
 });
 
-// ─── Item Cards ───────────────────────────────────────────────────────────────
+// ─── ITEM CARDS ──────────────────────────────────────────────
 
 function createItemCard() {
   itemCount++;
   const id = itemCount;
   const card = document.createElement("div");
-  card.className = "item-card";
+  card.className = "item-card mb-6 animate-fade-in";
   card.dataset.id = id;
 
+  const logoOpts = LOGOS.map(l => `<option value="${l.value}">${l.label}</option>`).join("");
+  const threadOpts = THREAD_COLORS.map(t => `<option value="${t.value}">${t.label}</option>`).join("");
+  const cardCount = document.querySelectorAll(".item-card").length + 1;
+
   card.innerHTML = `
-    <div class="item-card-header">
-      <div class="item-title">
-        <h3>New Item</h3>
-        <small class="item-subtitle"></small>
-      </div>
-      <span class="item-price-estimate" style="display: none;"></span>
-      ${id > 1 ? `<button type="button" class="btn-remove" onclick="removeItem(this)">Remove</button>` : ""}
+    <div class="flex items-center justify-between px-4 mb-1.5">
+      <p class="section-header px-0" style="padding:0; margin:0;">
+        ITEM ${cardCount}
+        <span class="item-label-detail"></span>
+      </p>
+      <span class="item-price-tag hidden text-ios-caption1 font-semibold text-ios-tint bg-ios-tint/10 px-2.5 py-1 rounded-full"></span>
     </div>
-    <div class="row-2">
-      <div class="field">
-        <label>Product <span class="req">*</span></label>
-        <select data-field="product" required onchange="updateCardDisplay(this)">
-          <option value="">Select…</option>
+
+    <div class="bg-white rounded-[10px] overflow-hidden">
+      <div class="card-row" data-validate="product">
+        <label class="field-label" for="product_${id}">Product <span class="req">*</span></label>
+        <select id="product_${id}" data-field="product" onchange="updateCardDisplay(this)">
+          <option value="">Choose a product</option>
           <option value="Better Sweater Jacket">Better Sweater® Jacket (Full Zip)</option>
           <option value="Better Sweater Vest">Better Sweater® Vest</option>
           <option value="Better Sweater Quarter Zip">Better Sweater® Quarter Zip</option>
         </select>
       </div>
-      <div class="field">
-        <label>Style <span class="req">*</span></label>
-        <select data-field="style" required onchange="updateSizes(this); updateColors(this); updateCardDisplay(this);">
-          <option value="">Select…</option>
-          <option value="Mens">Men's</option>
-          <option value="Womens">Women's</option>
-        </select>
-      </div>
-    </div>
-    <div class="row-3">
-      <div class="field">
-        <label>Size <span class="req">*</span></label>
-        <select data-field="size" required onchange="updateCardDisplay(this)">
-          <option value="">Select…</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Color <span class="req">*</span></label>
-        <div class="color-field-wrapper">
-          <span class="color-swatch"></span>
-          <select data-field="color" required onchange="updateColorSwatch(this); updateCardDisplay(this);">
-            <option value="">Select style first…</option>
+      <div class="card-row-split">
+        <div data-validate="style">
+          <label class="field-label" for="style_${id}">Style <span class="req">*</span></label>
+          <select id="style_${id}" data-field="style" onchange="updateSizes(this); updateColors(this); updateCardDisplay(this);">
+            <option value="">Select</option>
+            <option value="Mens">Men's</option>
+            <option value="Womens">Women's</option>
+          </select>
+        </div>
+        <div data-validate="size">
+          <label class="field-label" for="size_${id}">Size <span class="req">*</span> <a href="https://www.patagonia.com/product/mens-better-sweater-fleece-jacket/25528.html" target="_blank" rel="noopener" class="text-ios-tint font-normal normal-case tracking-normal">Size guide</a></label>
+          <select id="size_${id}" data-field="size" onchange="updateCardDisplay(this)">
+            <option value="">Select style first</option>
           </select>
         </div>
       </div>
-      <div class="field">
-        <label>Logo <span class="req">*</span></label>
-        <select data-field="logo" required>
-          <option value="">Select…</option>
-          ${LOGOS.map((l) => `<option value="${l.value}">${l.label}</option>`).join("")}
+      <div class="card-row" data-validate="color">
+        <label class="field-label" for="color_${id}">Color <span class="req">*</span></label>
+        <div class="flex items-center gap-2.5">
+          <span class="color-dot"></span>
+          <select id="color_${id}" data-field="color" class="flex-1" onchange="updateColorSwatch(this); updateCardDisplay(this);">
+            <option value="">Select style first</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-row" data-validate="logo">
+        <label class="field-label" for="logo_${id}">Logo <span class="req">*</span></label>
+        <select id="logo_${id}" data-field="logo" onchange="updateLogoPreview(this)">
+          <option value="">Choose a logo</option>
+          ${logoOpts}
+        </select>
+        <div class="logo-preview hidden mt-2 rounded-lg overflow-hidden max-h-[200px] cursor-pointer" onclick="openLightbox('logos')" role="button" aria-label="Tap to enlarge logo">
+          <img src="images/logos.jpg" alt="Logo preview" class="logo-preview-img w-[300%] max-w-none -mt-3" style="margin-left: 0%;">
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between px-4 mt-5 mb-1.5">
+      <p class="section-header px-0" style="padding:0; margin:0;">PERSONALIZATION</p>
+      <span class="text-ios-caption1 text-ios-label-tertiary">Optional &middot; $8/item</span>
+    </div>
+
+    <div class="bg-white rounded-[10px] overflow-hidden">
+      <div class="card-row">
+        <label class="field-label" for="embName_${id}">Name to Embroider</label>
+        <input type="text" id="embName_${id}" data-field="embroideredName" maxlength="20" placeholder="Jane Doe, MD" autocorrect="off" autocapitalize="words" oninput="updateCardDisplay(this); updateThreadRequired(this);">
+        <span class="text-ios-caption2 text-ios-label-tertiary mt-1 block">Max 20 characters &middot; No returns on embroidered items. Double-check spelling.</span>
+      </div>
+      <div class="card-row" data-validate="threadColor">
+        <label class="field-label" for="thread_${id}">Thread Color <span class="thread-req hidden req">*</span></label>
+        <select id="thread_${id}" data-field="threadColor">
+          <option value="">Select</option>
+          ${threadOpts}
         </select>
       </div>
     </div>
-    <div class="row-2">
-      <div class="field">
-        <label>Embroidered Name &amp; Title</label>
-        <div class="field-hint">Optional — max 20 characters</div>
-        <input type="text" data-field="embroideredName" maxlength="20" placeholder="Jane Doe, MD" onchange="updateCardDisplay(this); updateThreadRequired(this);">
-      </div>
-      <div class="field">
-        <label>Name Thread Color <span class="req thread-req" style="display:none;">*</span></label>
-        <div class="field-hint">Required if name entered</div>
-        <select data-field="threadColor">
-          <option value="">Select…</option>
-          ${THREAD_COLORS.map((t) => `<option value="${t.value}">${t.label}</option>`).join("")}
-        </select>
-      </div>
-    </div>
+
+    ${cardCount > 1 ? `
+    <div class="flex justify-end px-2 mt-3">
+      <button type="button" onclick="removeItem(this)" class="text-ios-subheadline text-ios-destructive font-medium min-h-[44px] px-3 active:opacity-50 transition-opacity">
+        Remove Item
+      </button>
+    </div>` : ""}
   `;
 
   document.getElementById("itemsContainer").appendChild(card);
-  updateItemsCount();
+  initSelectPlaceholders(card);
+  updateItemNumbers();
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function removeItem(btn) {
-  btn.closest(".item-card").remove();
-  updateItemsCount();
+  const card = btn.closest(".item-card");
+  card.style.opacity = "0";
+  card.style.transform = "scale(0.95)";
+  card.style.transition = "all 0.2s ease";
+  setTimeout(() => {
+    card.remove();
+    updateItemNumbers();
+  }, 200);
 }
 
-function updateItemsCount() {
-  const count = document.querySelectorAll(".item-card").length;
-  const countEl = document.getElementById("itemsCount");
-  countEl.textContent = count > 0 ? `(${count})` : "";
+function updateItemNumbers() {
+  const cards = document.querySelectorAll(".item-card");
+  cards.forEach((card, i) => {
+    const label = card.querySelector(".section-header");
+    const detailSpan = card.querySelector(".item-label-detail");
+    const product = card.querySelector('[data-field="product"]').value;
+    if (product) {
+      const pricing = PRICING[product];
+      label.childNodes[0].textContent = `ITEM ${i + 1} — `;
+      detailSpan.textContent = pricing?.label?.toUpperCase() || "";
+    } else {
+      label.childNodes[0].textContent = `ITEM ${i + 1} `;
+      detailSpan.textContent = "";
+    }
+  });
 }
 
 function updateSizes(styleSelect) {
   const card = styleSelect.closest(".item-card");
   const sizeSelect = card.querySelector('[data-field="size"]');
   const style = styleSelect.value;
-
-  sizeSelect.innerHTML = '<option value="">Select…</option>';
-
+  sizeSelect.innerHTML = '<option value="">Select</option>';
   if (style && SIZES[style.toLowerCase()]) {
-    SIZES[style.toLowerCase()].forEach((s) => {
+    SIZES[style.toLowerCase()].forEach(s => {
       const opt = document.createElement("option");
       opt.value = s;
       opt.textContent = s;
@@ -1045,14 +964,12 @@ function updateSizes(styleSelect) {
 function updateColors(styleSelect) {
   const card = styleSelect.closest(".item-card");
   const colorSelect = card.querySelector('[data-field="color"]');
+  const swatch = card.querySelector(".color-dot");
   const style = styleSelect.value;
-
-  colorSelect.innerHTML = '<option value="">Select…</option>';
-  colorSelect.classList.remove("has-color");
-  card.querySelector(".color-swatch").classList.remove("visible");
-
+  colorSelect.innerHTML = '<option value="">Select</option>';
+  swatch.classList.remove("visible");
   if (style && COLORS[style.toLowerCase()]) {
-    COLORS[style.toLowerCase()].forEach((c) => {
+    COLORS[style.toLowerCase()].forEach(c => {
       const opt = document.createElement("option");
       opt.value = c.value;
       opt.textContent = c.label;
@@ -1063,96 +980,119 @@ function updateColors(styleSelect) {
 
 function updateColorSwatch(colorSelect) {
   const card = colorSelect.closest(".item-card");
-  const swatch = card.querySelector(".color-swatch");
+  const swatch = card.querySelector(".color-dot");
   const color = colorSelect.value;
-
   if (color && COLOR_SWATCHES[color]) {
     swatch.style.backgroundColor = COLOR_SWATCHES[color];
     swatch.classList.add("visible");
-    colorSelect.classList.add("has-color");
   } else {
     swatch.classList.remove("visible");
-    colorSelect.classList.remove("has-color");
+  }
+}
+
+function updateLogoPreview(logoSelect) {
+  const card = logoSelect.closest(".item-card");
+  const preview = card.querySelector(".logo-preview");
+  const img = card.querySelector(".logo-preview-img");
+  const value = logoSelect.value;
+
+  if (value) {
+    const offsets = { "Option 1": "0%", "Option 2": "-100%", "Option 3": "-200%" };
+    img.style.marginLeft = offsets[value] || "0%";
+    preview.classList.remove("hidden");
+  } else {
+    preview.classList.add("hidden");
   }
 }
 
 function updateThreadRequired(nameInput) {
   const card = nameInput.closest(".item-card");
   const reqSpan = card.querySelector(".thread-req");
-  if (nameInput.value.trim()) {
-    reqSpan.style.display = "inline";
-  } else {
-    reqSpan.style.display = "none";
-  }
+  reqSpan.classList.toggle("hidden", !nameInput.value.trim());
 }
 
 function updateCardDisplay(el) {
   const card = el.closest(".item-card");
   const product = card.querySelector('[data-field="product"]').value;
-  const style = card.querySelector('[data-field="style"]').value;
-  const size = card.querySelector('[data-field="size"]').value;
-  const color = card.querySelector('[data-field="color"]').value;
   const name = card.querySelector('[data-field="embroideredName"]').value.trim();
+  const priceTag = card.querySelector(".item-price-tag");
+  const detailSpan = card.querySelector(".item-label-detail");
+  const sectionHeader = card.querySelector(".section-header");
 
-  const titleEl = card.querySelector("h3");
-  const subtitleEl = card.querySelector(".item-subtitle");
-  const priceEl = card.querySelector(".item-price-estimate");
-
-  // Build dynamic title
   if (product) {
-    const productLabel = PRICING[product]?.label || product;
-    let title = productLabel;
-    if (color) title += ` - ${color}`;
-    if (size) title += ` - ${size}`;
-    titleEl.textContent = title;
-
-    // Show embroidered name as subtitle
-    if (name) {
-      subtitleEl.textContent = `"${name}"`;
-    } else {
-      subtitleEl.textContent = style ? `${style === "Mens" ? "Men's" : "Women's"}` : "";
-    }
-
-    // Show price estimate (base + folding + embroidery + tax, before Stripe fee)
     const pricing = PRICING[product];
+    const idx = [...document.querySelectorAll(".item-card")].indexOf(card);
+    sectionHeader.childNodes[0].textContent = `ITEM ${idx + 1} — `;
+    detailSpan.textContent = pricing?.label?.toUpperCase() || "";
+
     if (pricing) {
       const embFee = name ? EMBROIDERY_FEE : 0;
       const subtotalMin = pricing.min + embFee + LOGO_FEE + FOLDING_FEE;
       const subtotalMax = pricing.max + embFee + LOGO_FEE + FOLDING_FEE;
       const itemMin = subtotalMin + (subtotalMin * TAX_RATE);
       const itemMax = subtotalMax + (subtotalMax * TAX_RATE);
-      priceEl.textContent = `$${itemMin.toFixed(0)}–$${itemMax.toFixed(0)}`;
-      priceEl.style.display = "inline-block";
+      priceTag.textContent = `$${itemMin.toFixed(0)}–$${itemMax.toFixed(0)}`;
+      priceTag.classList.remove("hidden");
     }
   } else {
-    titleEl.textContent = "New Item";
-    subtitleEl.textContent = "";
-    priceEl.style.display = "none";
+    const idx = [...document.querySelectorAll(".item-card")].indexOf(card);
+    sectionHeader.childNodes[0].textContent = `ITEM ${idx + 1} `;
+    detailSpan.textContent = "";
+    priceTag.classList.add("hidden");
   }
 }
 
-// ─── Toast ────────────────────────────────────────────────────────────────────
+// ─── VALIDATION ──────────────────────────────────────────────
 
-function showToast(message, isError) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.className = "toast" + (isError ? " error" : "") + " show";
-  setTimeout(() => (toast.className = "toast"), 4000);
+function clearValidation() {
+  document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
 }
 
-// ─── Validation ───────────────────────────────────────────────────────────────
-
-function validate() {
+function validateStep1() {
+  clearValidation();
   let valid = true;
-  document.querySelectorAll(".field.invalid").forEach((f) => f.classList.remove("invalid"));
+  let firstInvalid = null;
+  let errorMsg = "Please fill in all required fields.";
 
-  ["personName", "personPhone", "personEmail", "personPosition"].forEach((id) => {
+  function markInvalid(id) {
     const el = document.getElementById(id);
-    if (!el.value.trim()) {
-      el.closest(".field").classList.add("invalid");
-      valid = false;
-    }
+    const row = el.closest(".card-row") || el.closest("[data-validate]");
+    if (row) row.classList.add("invalid");
+    if (!firstInvalid) firstInvalid = row;
+    valid = false;
+  }
+
+  ["personName", "personEmail", "personEmailConfirm", "personPhone", "personPosition"].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) markInvalid(id);
   });
+
+  // Email format validation
+  const email = document.getElementById("personEmail").value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email && !emailRegex.test(email)) {
+    markInvalid("personEmail");
+    errorMsg = "Please enter a valid email address.";
+  }
+
+  // Email confirmation match
+  const emailConfirm = document.getElementById("personEmailConfirm").value.trim();
+  if (email && emailConfirm && email.toLowerCase() !== emailConfirm.toLowerCase()) {
+    markInvalid("personEmailConfirm");
+    errorMsg = "Email addresses don't match.";
+  }
+
+  if (!valid) {
+    showToast(errorMsg, true);
+    if (firstInvalid) firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  return valid;
+}
+
+function validateStep2() {
+  clearValidation();
+  let valid = true;
+  let firstInvalid = null;
 
   const cards = document.querySelectorAll(".item-card");
   if (cards.length === 0) {
@@ -1160,94 +1100,134 @@ function validate() {
     return false;
   }
 
-  cards.forEach((card) => {
-    // Required fields
-    ["product", "style", "size", "color", "logo"].forEach((f) => {
+  cards.forEach(card => {
+    ["product", "style", "size", "color", "logo"].forEach(f => {
       const el = card.querySelector(`[data-field="${f}"]`);
       if (!el.value || !el.value.trim()) {
-        el.closest(".field").classList.add("invalid");
+        const row = el.closest("[data-validate]") || el.closest(".card-row");
+        if (row) row.classList.add("invalid");
+        if (!firstInvalid) firstInvalid = row;
         valid = false;
       }
     });
 
-    // Thread color is required only if embroidered name is entered
     const embName = card.querySelector('[data-field="embroideredName"]').value.trim();
     const threadColor = card.querySelector('[data-field="threadColor"]');
     if (embName && !threadColor.value) {
-      threadColor.closest(".field").classList.add("invalid");
+      const row = threadColor.closest("[data-validate]") || threadColor.closest(".card-row");
+      if (row) row.classList.add("invalid");
+      if (!firstInvalid) firstInvalid = row;
       valid = false;
     }
   });
 
-  if (!valid) showToast("Please fill in all required fields.", true);
+  if (!valid) {
+    showToast("Please fill in all required fields.", true);
+    if (firstInvalid) firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
   return valid;
 }
 
-// ─── Order Summary ────────────────────────────────────────────────────────────
+// ─── HELPERS ─────────────────────────────────────────────────
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+// ─── ORDER SUMMARY ───────────────────────────────────────────
 
 function buildOrderSummary() {
-  const name = document.getElementById("personName").value.trim();
-  const email = document.getElementById("personEmail").value.trim();
-  const phone = document.getElementById("personPhone").value.trim();
-  const position = document.getElementById("personPosition").value;
+  const name = escapeHtml(document.getElementById("personName").value.trim());
+  const email = escapeHtml(document.getElementById("personEmail").value.trim());
+  const phone = escapeHtml(document.getElementById("personPhone").value.trim());
+  const position = escapeHtml(document.getElementById("personPosition").value);
 
   let html = `
-    <div class="summary-customer">
-      <div class="summary-customer-row"><span class="summary-customer-label">Name</span><span>${name}</span></div>
-      <div class="summary-customer-row"><span class="summary-customer-label">Email</span><span>${email}</span></div>
-      <div class="summary-customer-row"><span class="summary-customer-label">Phone</span><span>${phone}</span></div>
-      ${position ? `<div class="summary-customer-row"><span class="summary-customer-label">Role</span><span>${position}</span></div>` : ''}
+    <div class="flex items-center justify-between px-4 mb-1.5">
+      <p class="section-header px-0" style="padding:0; margin:0;">YOUR INFORMATION</p>
+      <button type="button" onclick="goToStep(1)" class="text-ios-subheadline text-ios-tint font-medium min-h-[44px] px-1 active:opacity-50">Edit</button>
     </div>
-    <div class="summary-section-label">Items</div>
+    <div class="bg-white rounded-[10px] overflow-hidden mb-6">
+      <div class="summary-row">
+        <span class="summary-row-label">Name</span>
+        <span class="summary-row-value">${name}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-row-label">Email</span>
+        <span class="summary-row-value">${email}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-row-label">Phone</span>
+        <span class="summary-row-value">${phone}</span>
+      </div>
+      ${position ? `<div class="summary-row">
+        <span class="summary-row-label">Position</span>
+        <span class="summary-row-value">${position}</span>
+      </div>` : ""}
+    </div>
   `;
 
-  let baseMin = 0;
-  let baseMax = 0;
-  let itemCount = 0;
-  let embroideredCount = 0;
+  let baseMin = 0, baseMax = 0, totalItems = 0, embroideredCount = 0;
+  const cards = document.querySelectorAll(".item-card");
 
-  document.querySelectorAll(".item-card").forEach((card) => {
+  html += `
+    <div class="flex items-center justify-between px-4 mb-1.5">
+      <p class="section-header px-0" style="padding:0; margin:0;">ITEMS (${cards.length})</p>
+      <button type="button" onclick="goToStep(2)" class="text-ios-subheadline text-ios-tint font-medium min-h-[44px] px-1 active:opacity-50">Edit</button>
+    </div>
+    <div class="space-y-3 mb-6">`;
+
+  cards.forEach(card => {
     const product = card.querySelector('[data-field="product"]').value;
     const style = card.querySelector('[data-field="style"]').value;
-    const size = card.querySelector('[data-field="size"]').value;
-    const color = card.querySelector('[data-field="color"]').value;
+    const size = escapeHtml(card.querySelector('[data-field="size"]').value);
+    const color = escapeHtml(card.querySelector('[data-field="color"]').value);
     const logo = card.querySelector('[data-field="logo"]').value;
-    const embName = card.querySelector('[data-field="embroideredName"]').value.trim();
-    const thread = card.querySelector('[data-field="threadColor"]').value;
+    const embName = escapeHtml(card.querySelector('[data-field="embroideredName"]').value.trim());
+    const thread = escapeHtml(card.querySelector('[data-field="threadColor"]').value);
 
     const pricing = PRICING[product];
-    const productLabel = pricing?.label || product;
-    const swatchColor = COLOR_SWATCHES[color] || "#ccc";
+    const productLabel = escapeHtml(pricing?.label || product);
+    const swatchColor = COLOR_SWATCHES[card.querySelector('[data-field="color"]').value] || "#ccc";
+    const logoLabel = escapeHtml(LOGOS.find(l => l.value === logo)?.label || logo);
+    const styleLabel = style === "Mens" ? "Men's" : "Women's";
 
     baseMin += pricing?.min || 0;
     baseMax += pricing?.max || 0;
-    itemCount++;
+    totalItems++;
     if (embName) embroideredCount++;
 
-    const logoLabel = LOGOS.find(l => l.value === logo)?.label || logo;
-    const embroideryLine = embName
-      ? `Embroidery: "${embName}" (${thread} thread)<br>`
-      : '';
+    const embWarning = embName ? `<div class="text-ios-caption1 text-ios-label-tertiary mt-1.5 flex items-center gap-1">
+            <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" class="text-yellow-500 flex-shrink-0"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.168 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+            No returns on embroidered items
+          </div>` : "";
 
     html += `
-      <div class="summary-item">
-        <div class="summary-item-header">
-          <span class="summary-item-title">${productLabel} - ${size}</span>
-          <span class="summary-item-price">$${pricing?.min.toFixed(2)}–$${pricing?.max.toFixed(2)}</span>
+      <div class="bg-white rounded-[10px] p-4">
+        <div class="flex justify-between items-start gap-3 mb-1.5">
+          <span class="text-ios-headline">${productLabel} &middot; ${size}</span>
         </div>
-        <div class="summary-item-details">
-          <span><span class="mini-swatch" style="background: ${swatchColor};"></span>${color}</span> ·
-          ${style === "Mens" ? "Men's" : "Women's"}<br>
-          ${embroideryLine}Logo: ${logoLabel}
+        <div class="text-ios-subheadline text-ios-label-secondary space-y-0.5">
+          <div class="flex items-center gap-1.5">
+            <span class="inline-block w-2.5 h-2.5 rounded-full border border-ios-separator flex-shrink-0" style="background:${swatchColor}"></span>
+            ${color} &middot; ${styleLabel}
+          </div>
+          ${embName ? `<div>"${embName}" &middot; ${thread} thread</div>` : ""}
+          <div class="text-ios-caption1 text-ios-label-tertiary mt-1">${logoLabel}</div>
+          ${embWarning}
         </div>
       </div>
     `;
   });
 
+  html += `</div>`;
+
   // Calculate fees
   const embroideryTotal = EMBROIDERY_FEE * embroideredCount;
-  const logoTotal = LOGO_FEE * itemCount;
-  const foldingTotal = FOLDING_FEE * itemCount;
+  const logoTotal = LOGO_FEE * totalItems;
+  const foldingTotal = FOLDING_FEE * totalItems;
   const subtotalMin = baseMin + embroideryTotal + logoTotal + foldingTotal;
   const subtotalMax = baseMax + embroideryTotal + logoTotal + foldingTotal;
   const taxMin = subtotalMin * TAX_RATE;
@@ -1257,76 +1237,77 @@ function buildOrderSummary() {
   const totalMin = subtotalMin + taxMin + stripeFeeMin + SHIPPING_FEE;
   const totalMax = subtotalMax + taxMax + stripeFeeMax + SHIPPING_FEE;
 
-  // Build fee breakdown
-  const embroideryRow = embroideredCount > 0
-    ? `<div class="summary-fee-row">
-        <span>Name embroidery ($${EMBROIDERY_FEE.toFixed(2)}/item × ${embroideredCount})</span>
-        <span>$${embroideryTotal.toFixed(2)}</span>
-      </div>`
-    : '';
+  const embRow = embroideredCount > 0
+    ? `<div class="summary-row">
+        <span class="summary-row-label">Name embroidery ($${EMBROIDERY_FEE.toFixed(2)} × ${embroideredCount})</span>
+        <span class="summary-row-value">$${embroideryTotal.toFixed(2)}</span>
+      </div>` : "";
 
   html += `
-    <div class="summary-section-label">Price Estimate</div>
-    <div class="summary-fees">
-      <div class="summary-fee-row">
-        <span>Items subtotal</span>
-        <span>$${baseMin.toFixed(2)}–$${baseMax.toFixed(2)}</span>
+    <p class="section-header">PRICE ESTIMATE</p>
+    <div class="bg-white rounded-[10px] overflow-hidden mb-3">
+      <div class="summary-row">
+        <span class="summary-row-label">Items subtotal</span>
+        <span class="summary-row-value">$${baseMin.toFixed(2)}–$${baseMax.toFixed(2)}</span>
       </div>
-      ${embroideryRow}
-      <div class="summary-fee-row">
-        <span>Logo embroidery ($${LOGO_FEE.toFixed(2)}/item × ${itemCount})</span>
-        <span>$${logoTotal.toFixed(2)}</span>
+      ${embRow}
+      <div class="summary-row">
+        <span class="summary-row-label">Logo embroidery ($${LOGO_FEE.toFixed(2)} × ${totalItems})</span>
+        <span class="summary-row-value">$${logoTotal.toFixed(2)}</span>
       </div>
-      <div class="summary-fee-row">
-        <span>Bag and folding fee ($${FOLDING_FEE.toFixed(2)}/item × ${itemCount})</span>
-        <span>$${foldingTotal.toFixed(2)}</span>
+      <div class="summary-row">
+        <span class="summary-row-label">Bag &amp; folding ($${FOLDING_FEE.toFixed(2)} × ${totalItems})</span>
+        <span class="summary-row-value">$${foldingTotal.toFixed(2)}</span>
       </div>
-      <div class="summary-fee-row">
-        <span>Sales tax (${(TAX_RATE * 100).toFixed(2)}%)</span>
-        <span>$${taxMin.toFixed(2)}–$${taxMax.toFixed(2)}</span>
+      <div class="summary-row">
+        <span class="summary-row-label">Sales tax (${(TAX_RATE * 100).toFixed(2)}%)</span>
+        <span class="summary-row-value">$${taxMin.toFixed(2)}–$${taxMax.toFixed(2)}</span>
       </div>
-      <div class="summary-fee-row">
-        <span>Shipping</span>
-        <span>$${SHIPPING_FEE.toFixed(2)}</span>
+      <div class="summary-row">
+        <span class="summary-row-label">Shipping</span>
+        <span class="summary-row-value">$${SHIPPING_FEE.toFixed(2)}</span>
       </div>
-      <div class="summary-fee-row">
-        <span>Payment processing (2.9% + $0.30)</span>
-        <span>$${stripeFeeMin.toFixed(2)}–$${stripeFeeMax.toFixed(2)}</span>
+      <div class="summary-row">
+        <span class="summary-row-label">Processing (2.9% + $0.30)</span>
+        <span class="summary-row-value">$${stripeFeeMin.toFixed(2)}–$${stripeFeeMax.toFixed(2)}</span>
       </div>
     </div>
-    <div class="summary-total">
-      <div class="summary-total-label">
-        Estimated Total
-        <small>Final price depends on order volume</small>
+
+    <div class="bg-white rounded-[10px] p-4 flex justify-between items-start">
+      <div>
+        <p class="text-ios-headline">Estimated Total</p>
+        <p class="text-ios-caption1 text-ios-label-tertiary mt-0.5">Final price will be at or below this estimate</p>
       </div>
-      <div class="summary-total-amount">$${totalMin.toFixed(2)}–$${totalMax.toFixed(2)}</div>
+      <p class="text-ios-title2 font-bold text-ios-tint whitespace-nowrap">$${totalMin.toFixed(2)}–$${totalMax.toFixed(2)}</p>
     </div>
   `;
 
-  document.getElementById("summaryBody").innerHTML = html;
+  document.getElementById("reviewContent").innerHTML = html;
 }
 
-function showSummary() {
-  buildOrderSummary();
-  document.getElementById("summaryModal").classList.add("open");
-  document.body.style.overflow = "hidden";
+// ─── SUCCESS SCREEN ──────────────────────────────────────────
+
+function showSuccessScreen(payload) {
+  const count = payload.items.length;
+  const itemWord = count === 1 ? "item" : "items";
+  document.getElementById("successSummary").textContent =
+    `${count} ${itemWord} for ${payload.name}`;
+
+  const deadlineNote = ORDER_DEADLINE !== "TBD" ? ` The deadline to order is ${ORDER_DEADLINE}.` : "";
+  document.getElementById("successInvoiceMsg").textContent =
+    `You'll receive an invoice via email at ${payload.email} once all orders are collected.${deadlineNote}`;
+
+  document.getElementById("landingView").classList.add("hidden");
+  document.getElementById("wizardView").classList.add("hidden");
+  document.getElementById("successView").classList.remove("hidden");
+  window.scrollTo(0, 0);
 }
 
-function hideSummary() {
-  document.getElementById("summaryModal").classList.remove("open");
-  document.body.style.overflow = "";
-}
+// ─── SUBMISSION ──────────────────────────────────────────────
 
-// ─── Form Submission ──────────────────────────────────────────────────────────
-
-let pendingPayload = null;
-
-document.getElementById("orderForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (!validate()) return;
-
+async function submitOrder() {
   const items = [];
-  document.querySelectorAll(".item-card").forEach((card) => {
+  document.querySelectorAll(".item-card").forEach(card => {
     items.push({
       product: card.querySelector('[data-field="product"]').value,
       style: card.querySelector('[data-field="style"]').value,
@@ -1346,18 +1327,7 @@ document.getElementById("orderForm").addEventListener("submit", (e) => {
     items,
   };
 
-  showSummary();
-});
-
-document.getElementById("summaryBack").addEventListener("click", hideSummary);
-
-document.getElementById("summaryConfirm").addEventListener("click", async () => {
-  if (!pendingPayload || !APPS_SCRIPT_URL) {
-    showToast("Form endpoint not configured yet.", true);
-    return;
-  }
-
-  const btn = document.getElementById("summaryConfirm");
+  const btn = document.getElementById("wizardAction");
   btn.disabled = true;
   btn.textContent = "Submitting…";
 
@@ -1371,12 +1341,17 @@ document.getElementById("summaryConfirm").addEventListener("click", async () => 
     const result = await res.json();
 
     if (result.status === "ok") {
-      hideSummary();
-      showToast(`Order submitted! ${pendingPayload.items.length} item(s) recorded.`);
-      document.getElementById("orderForm").reset();
+      showSuccessScreen(pendingPayload);
+
+      // Reset form
+      document.getElementById("personName").value = "";
+      document.getElementById("personEmail").value = "";
+      document.getElementById("personEmailConfirm").value = "";
+      document.getElementById("personPhone").value = "";
+      document.getElementById("personPosition").value = "";
       document.getElementById("itemsContainer").innerHTML = "";
       itemCount = 0;
-      createItemCard(); // This calls updateItemsCount()
+      createItemCard();
       pendingPayload = null;
     } else {
       throw new Error(result.message || "Unknown error");
@@ -1387,12 +1362,107 @@ document.getElementById("summaryConfirm").addEventListener("click", async () => 
     btn.disabled = false;
     btn.textContent = "Submit Order";
   }
+}
+
+// ─── LIGHTBOX ────────────────────────────────────────────────
+
+function openLightbox(key) {
+  const data = REF_IMAGES[key];
+  document.getElementById("lightboxImg").src = data.src;
+  document.getElementById("lightboxCaption").textContent = data.caption;
+  document.getElementById("lightbox").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox(e) {
+  if (e.target.id === "lightbox" || e.target.closest("button")) {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+}
+
+// ─── TOAST ───────────────────────────────────────────────────
+
+function showToast(message, isError) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = "toast" + (isError ? " error" : "") + " show";
+  setTimeout(() => (toast.className = "toast"), 4000);
+}
+
+// ─── KEYBOARD ────────────────────────────────────────────────
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  // Enter advances focus within wizard
+  if (e.key === "Enter" && e.target.matches("input") && currentStep > 0) {
+    e.preventDefault();
+    const step = document.getElementById(`step${currentStep}`);
+    const inputs = [...step.querySelectorAll("input, select")];
+    const idx = inputs.indexOf(e.target);
+    if (idx < inputs.length - 1) {
+      inputs[idx + 1].focus();
+    } else {
+      handleAction();
+    }
+  }
 });
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+// ─── SELECT PLACEHOLDER STYLING ──────────────────────────────
 
-document.getElementById("addItemBtn").addEventListener("click", createItemCard);
+function initSelectPlaceholders(root) {
+  root.querySelectorAll("select").forEach(sel => {
+    updateSelectPlaceholder(sel);
+    sel.addEventListener("change", () => updateSelectPlaceholder(sel));
+  });
+}
+
+function updateSelectPlaceholder(sel) {
+  sel.classList.toggle("placeholder", !sel.value);
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+
 createItemCard();
+initSelectPlaceholders(document.getElementById("step1"));
+history.replaceState({ step: 0 }, "", window.location.pathname);
+
+// Populate deadline text
+if (ORDER_DEADLINE !== "TBD") {
+  const deadlineDate = new Date(ORDER_DEADLINE + " 23:59:59");
+  const now = new Date();
+  const daysLeft = Math.ceil((deadlineDate - now) / (1000 * 60 * 60 * 24));
+
+  // Hero: countdown style
+  const hero = document.getElementById("heroDeadline");
+  if (daysLeft > 0) {
+    const dayWord = daysLeft === 1 ? "day" : "days";
+    hero.innerHTML = `
+      <span class="inline-flex items-center gap-2 bg-ios-tint/10 rounded-full px-4 py-2">
+        <span class="text-ios-title3 font-bold text-ios-tint">${daysLeft} ${dayWord} left</span>
+        <span class="text-ios-footnote text-ios-label-secondary">to order &middot; Due ${ORDER_DEADLINE}</span>
+      </span>`;
+  } else if (daysLeft === 0) {
+    hero.innerHTML = `
+      <span class="inline-flex items-center gap-2 bg-ios-destructive/10 rounded-full px-4 py-2">
+        <span class="text-ios-title3 font-bold text-ios-destructive">Last day!</span>
+        <span class="text-ios-footnote text-ios-label-secondary">Orders due today</span>
+      </span>`;
+  } else {
+    hero.innerHTML = `
+      <span class="inline-flex items-center gap-2 bg-ios-destructive/10 rounded-full px-4 py-2">
+        <span class="text-ios-headline text-ios-destructive">Orders are closed</span>
+      </span>`;
+  }
+
+  // Static date for CTA bar and FAQ
+  const staticMsg = `Order deadline: ${ORDER_DEADLINE}`;
+  document.querySelectorAll(".deadline-text").forEach(el => el.textContent = staticMsg);
+}
 </script>
 
 </body>

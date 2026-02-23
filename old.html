@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMC EM Patagonia Order Form 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f0eb;
+    --surface: #ffffff;
+    --border: #d4cdc4;
+    --border-focus: #009CA6;
+    --text: #1a1a1a;
+    --text-muted: #6b6560;
+    --accent: #009CA6;          /* Pantone 321C */
+    --accent-hover: #007A82;
+    --danger: #b5403a;
+    --danger-hover: #943330;
+    --tag-bg: #e8e2da;
+    --radius: 8px;
+    --font-body: 'DM Sans', sans-serif;
+    --font-heading: 'Source Serif 4', Georgia, serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-wrapper {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-family: var(--font-heading);
+    font-size: 1.85rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .page-header .subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* ── Sections ── */
+  .form-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .form-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── Form controls ── */
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+  }
+
+  .field label .req { color: var(--danger); margin-left: 2px; }
+
+  .field-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    font-style: italic;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%236b6560' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.25rem;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(0, 156, 166, 0.1);
+  }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+
+  @media (max-width: 520px) {
+    .row-2, .row-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Item cards ── */
+  #itemsContainer {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  #itemsContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #itemsContainer::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #itemsContainer::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  #itemsContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+
+  .item-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    position: relative;
+    background: #fafaf8;
+  }
+
+  .item-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+
+  .item-card-header h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .item-card-header .item-title {
+    flex: 1;
+  }
+
+  .item-card-header .item-title small {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .item-price-estimate {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+    background: rgba(0, 156, 166, 0.08);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .btn-remove {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-remove:hover { background: var(--danger); color: #fff; }
+
+  /* ── Color swatch ── */
+  .color-field-wrapper {
+    position: relative;
+  }
+
+  .color-swatch {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    pointer-events: none;
+    display: none;
+  }
+
+  .color-swatch.visible {
+    display: block;
+  }
+
+  .color-field-wrapper select {
+    padding-left: 2.25rem;
+  }
+
+  .color-field-wrapper select:not(.has-color) {
+    padding-left: 0.75rem;
+  }
+
+  /* ── Buttons ── */
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 0.6rem 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-add:hover { background: rgba(0,156,166,0.06); }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 0.85rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-submit:hover { background: var(--accent-hover); }
+  .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ── FAQ ── */
+  .faq-section { margin-bottom: 1.25rem; }
+
+  .faq-section details {
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 0;
+  }
+
+  .faq-section details:last-child { border-bottom: none; }
+
+  .faq-section summary {
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-section summary::-webkit-details-marker { display: none; }
+
+  .faq-section summary::after {
+    content: '+';
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+
+  .faq-section details[open] summary::after {
+    content: '−';
+  }
+
+  .faq-answer {
+    margin-top: 0.65rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .faq-answer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-size: 0.82rem;
+  }
+
+  .faq-answer th, .faq-answer td {
+    text-align: left;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--border);
+  }
+
+  .faq-answer th {
+    background: var(--tag-bg);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── Feedback ── */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(1rem);
+    background: var(--accent);
+    color: #fff;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 100;
+    text-align: center;
+    max-width: 90vw;
+  }
+
+  .toast.error { background: var(--danger); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+  .field.invalid input,
+  .field.invalid select {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(181,64,58,0.1);
+  }
+
+  /* ── Reference Images ── */
+  .ref-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ref-card {
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .ref-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .ref-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ref-card-label {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ref-card-label span {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    padding: 1rem;
+  }
+
+  .lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+    line-height: 1;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* ── Order Summary Modal ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius);
+    max-width: 500px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  }
+
+  .modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .modal-body {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .summary-customer {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-customer-row {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    margin-bottom: 0.2rem;
+    align-items: baseline;
+  }
+
+  .summary-customer-row:last-child { margin-bottom: 0; }
+
+  .summary-customer-label {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    min-width: 42px;
+  }
+
+  .summary-section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0.75rem 0 0.4rem;
+  }
+
+  .summary-item {
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .summary-item:last-of-type {
+    margin-bottom: 1.25rem;
+  }
+
+  .summary-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.35rem;
+  }
+
+  .summary-item-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .summary-item-price {
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .summary-item-details {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .summary-item-details span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .summary-item-details .mini-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: inline-block;
+  }
+
+  .summary-fees {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    background: #fafaf8;
+  }
+
+  .summary-fee-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-fee-row:last-child {
+    border-bottom: none;
+  }
+
+  .summary-total {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .summary-total-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .summary-total-label small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .summary-total-amount {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--accent);
+  }
+
+  .modal-footer {
+    padding: 1rem 1.5rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .btn-secondary {
+    flex: 1;
+    padding: 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-secondary:hover {
+    background: var(--tag-bg);
+  }
+
+  .btn-primary {
+    flex: 1;
+    padding: 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <header class="page-header">
+    <h1>CMC EM Patagonia Order 2026</h1>
+    <p class="subtitle">Better Sweater® Collection — Custom Embroidered</p>
+  </header>
+
+  <!-- FAQ -->
+  <section class="form-section faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>How much do the items cost?</summary>
+      <div class="faq-answer">
+        Pricing depends on total order volume. Below are the per-unit rates at various quantity tiers:
+        <table>
+          <tr><th>Product</th><th>6 pcs</th><th>18 pcs</th><th>50 pcs</th><th>72 pcs</th></tr>
+          <tr><td>Jacket (Full Zip)</td><td>$175</td><td>$173.58</td><td>$162.68</td><td>$159.68</td></tr>
+          <tr><td>Quarter Zip</td><td>$155</td><td>$152</td><td>$142.68</td><td>$139.58</td></tr>
+          <tr><td>Vest</td><td>$132.88</td><td>$131.28</td><td>$123.58</td><td>$119.88</td></tr>
+        </table>
+        A $10 logo embroidery fee, $1.25 bag and folding fee, and 7.25% NC sales tax are added per item, plus a $2.00 shipping fee per order. Final pricing will be communicated once all orders are in.
+      </div>
+    </details>
+
+    <details>
+      <summary>How much does name embroidery cost?</summary>
+      <div class="faq-answer">
+        Name embroidery costs $8 per item.
+      </div>
+    </details>
+
+    <details>
+      <summary>How do I send payment?</summary>
+      <div class="faq-answer">
+        Once all orders are received, you will be emailed an invoice with your total and payment instructions. NC sales tax (7.25%) and a payment processing fee (2.9% + $0.30) will be included in your invoice total.
+      </div>
+    </details>
+
+    <details>
+      <summary>How do I pick up my order?</summary>
+      <div class="faq-answer">
+        Orders will be shipped to the 3rd Floor MEB building at CMC Main. You will be responsible for picking up your individual order. The exact pickup location will be sent via email once the order arrives.
+      </div>
+    </details>
+
+    <details>
+      <summary>What is the return/refund policy?</summary>
+      <div class="faq-answer">
+        There are no returns on embroidered items. Refunds are only issued for quality control issues deemed to be the vendor's fault. Please double-check your size and that your name/title is typed exactly as you want it embroidered.
+      </div>
+    </details>
+  </section>
+
+  <!-- Reference Images -->
+  <section class="form-section">
+    <h2>Product Reference</h2>
+    <div class="ref-images">
+      <div class="ref-card" onclick="openLightbox('products')">
+        <img src="images/products.jpg" alt="Product Options" loading="lazy">
+        <div class="ref-card-label">Products <span>Click to enlarge</span></div>
+      </div>
+      <div class="ref-card" onclick="openLightbox('colors')">
+        <img src="images/colors.jpg" alt="Color Options" loading="lazy">
+        <div class="ref-card-label">Colors <span>Click to enlarge</span></div>
+      </div>
+      <div class="ref-card" onclick="openLightbox('logos')">
+        <img src="images/logos.jpg" alt="Logo Options" loading="lazy">
+        <div class="ref-card-label">Logos <span>Click to enlarge</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <form id="orderForm" novalidate>
+
+    <!-- Personal info -->
+    <section class="form-section">
+      <h2>Your Information</h2>
+      <div class="field">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="personName" required>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label>Phone <span class="req">*</span></label>
+          <input type="tel" id="personPhone" required>
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="personEmail" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Position / Occupation <span class="req">*</span></label>
+        <select id="personPosition" required>
+          <option value="">Select…</option>
+          <option>Attending</option>
+          <option>Fellow</option>
+          <option>Resident</option>
+          <option>APP</option>
+          <option>Nurse</option>
+          <option>Tech</option>
+          <option>EMS</option>
+          <option>Administrative Faculty</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Items -->
+    <section class="form-section">
+      <h2>Items <span id="itemsCount" style="font-weight: 400; color: var(--text-muted);"></span></h2>
+      <div id="itemsContainer"></div>
+      <button type="button" class="btn-add" id="addItemBtn">+ Add another item</button>
+    </section>
+
+    <button type="submit" class="btn-submit" id="submitBtn">Review Order</button>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- Order Summary Modal -->
+<div class="modal-overlay" id="summaryModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Review Your Order</h3>
+    </div>
+    <div class="modal-body" id="summaryBody"></div>
+    <div class="modal-footer">
+      <button type="button" class="btn-secondary" id="summaryBack">Go Back</button>
+      <button type="button" class="btn-primary" id="summaryConfirm">Submit Order</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvKNB_4bAF4D8lajjPrX9AM0JiRIa7MJxFzKPAI0m-m284xIHafIID6hrWlahFQ6iXRQ/exec";
+
+// Fees
+const EMBROIDERY_FEE = 8.00;
+const LOGO_FEE = 10.00;
+const FOLDING_FEE = 1.25;
+const SHIPPING_FEE = 2.00;
+const TAX_RATE = 0.0725;
+const STRIPE_PERCENT = 0.029;
+const STRIPE_FIXED = 0.30;
+
+// Base product prices (min = 72+ tier, max = 6 tier)
+const PRICING = {
+  "Better Sweater Jacket": { min: 159.68, max: 175.00, label: "Jacket" },
+  "Better Sweater Vest": { min: 119.88, max: 132.88, label: "Vest" },
+  "Better Sweater Quarter Zip": { min: 139.58, max: 155.00, label: "Quarter Zip" },
+};
+
+// Color swatches
+const COLOR_SWATCHES = {
+  "Black": "#1a1a1a",
+  "New Navy": "#1a2d47",
+  "Stonewash": "#8a9a9a",
+  "Birch White": "#d4cfc7",
+};
+
+const REF_IMAGES = {
+  products: { src: "images/products.jpg", caption: "Better Sweater® Jacket, Vest & Quarter Zip" },
+  colors: { src: "images/colors.jpg", caption: "Available Colors by Style" },
+  logos: { src: "images/logos.jpg", caption: "Embroidered Logo Options" }
+};
+
+const COLORS = {
+  mens: [
+    { value: "Black", label: "Black" },
+    { value: "New Navy", label: "New Navy" },
+    { value: "Stonewash", label: "Stonewash (Heather Gray)" },
+  ],
+  womens: [
+    { value: "Black", label: "Black" },
+    { value: "New Navy", label: "New Navy" },
+    { value: "Birch White", label: "Birch White (Heather Gray)" },
+  ],
+};
+
+const SIZES = {
+  mens: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+  womens: ["XXS", "XS", "S", "M", "L", "XL", "XXL"],
+};
+
+const LOGOS = [
+  { value: "Option 1", label: "Original CMC Logo - Solid Teal (Option 1)" },
+  { value: "Option 2", label: "Original CMC Logo - Solid White (Option 2)" },
+  { value: "Option 3", label: "Skyline Logo - Teal and White (Option 3)" },
+];
+
+const THREAD_COLORS = [
+  { value: "Black", label: "Black" },
+  { value: "White", label: "White" },
+];
+
+let itemCount = 0;
+
+// ─── Lightbox ─────────────────────────────────────────────────────────────────
+
+function openLightbox(key) {
+  const data = REF_IMAGES[key];
+  document.getElementById("lightboxImg").src = data.src;
+  document.getElementById("lightboxCaption").textContent = data.caption;
+  document.getElementById("lightbox").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox(e) {
+  if (e.target.id === "lightbox" || e.target.classList.contains("lightbox-close")) {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("lightbox").classList.remove("open");
+    document.getElementById("summaryModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+});
+
+// ─── Item Cards ───────────────────────────────────────────────────────────────
+
+function createItemCard() {
+  itemCount++;
+  const id = itemCount;
+  const card = document.createElement("div");
+  card.className = "item-card";
+  card.dataset.id = id;
+
+  card.innerHTML = `
+    <div class="item-card-header">
+      <div class="item-title">
+        <h3>New Item</h3>
+        <small class="item-subtitle"></small>
+      </div>
+      <span class="item-price-estimate" style="display: none;"></span>
+      ${id > 1 ? `<button type="button" class="btn-remove" onclick="removeItem(this)">Remove</button>` : ""}
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Product <span class="req">*</span></label>
+        <select data-field="product" required onchange="updateCardDisplay(this)">
+          <option value="">Select…</option>
+          <option value="Better Sweater Jacket">Better Sweater® Jacket (Full Zip)</option>
+          <option value="Better Sweater Vest">Better Sweater® Vest</option>
+          <option value="Better Sweater Quarter Zip">Better Sweater® Quarter Zip</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Style <span class="req">*</span></label>
+        <select data-field="style" required onchange="updateSizes(this); updateColors(this); updateCardDisplay(this);">
+          <option value="">Select…</option>
+          <option value="Mens">Men's</option>
+          <option value="Womens">Women's</option>
+        </select>
+      </div>
+    </div>
+    <div class="row-3">
+      <div class="field">
+        <label>Size <span class="req">*</span></label>
+        <select data-field="size" required onchange="updateCardDisplay(this)">
+          <option value="">Select…</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Color <span class="req">*</span></label>
+        <div class="color-field-wrapper">
+          <span class="color-swatch"></span>
+          <select data-field="color" required onchange="updateColorSwatch(this); updateCardDisplay(this);">
+            <option value="">Select style first…</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Logo <span class="req">*</span></label>
+        <select data-field="logo" required>
+          <option value="">Select…</option>
+          ${LOGOS.map((l) => `<option value="${l.value}">${l.label}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Embroidered Name &amp; Title</label>
+        <div class="field-hint">Optional — max 20 characters</div>
+        <input type="text" data-field="embroideredName" maxlength="20" placeholder="Jane Doe, MD" onchange="updateCardDisplay(this); updateThreadRequired(this);">
+      </div>
+      <div class="field">
+        <label>Name Thread Color <span class="req thread-req" style="display:none;">*</span></label>
+        <div class="field-hint">Required if name entered</div>
+        <select data-field="threadColor">
+          <option value="">Select…</option>
+          ${THREAD_COLORS.map((t) => `<option value="${t.value}">${t.label}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("itemsContainer").appendChild(card);
+  updateItemsCount();
+}
+
+function removeItem(btn) {
+  btn.closest(".item-card").remove();
+  updateItemsCount();
+}
+
+function updateItemsCount() {
+  const count = document.querySelectorAll(".item-card").length;
+  const countEl = document.getElementById("itemsCount");
+  countEl.textContent = count > 0 ? `(${count})` : "";
+}
+
+function updateSizes(styleSelect) {
+  const card = styleSelect.closest(".item-card");
+  const sizeSelect = card.querySelector('[data-field="size"]');
+  const style = styleSelect.value;
+
+  sizeSelect.innerHTML = '<option value="">Select…</option>';
+
+  if (style && SIZES[style.toLowerCase()]) {
+    SIZES[style.toLowerCase()].forEach((s) => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s;
+      sizeSelect.appendChild(opt);
+    });
+  }
+}
+
+function updateColors(styleSelect) {
+  const card = styleSelect.closest(".item-card");
+  const colorSelect = card.querySelector('[data-field="color"]');
+  const style = styleSelect.value;
+
+  colorSelect.innerHTML = '<option value="">Select…</option>';
+  colorSelect.classList.remove("has-color");
+  card.querySelector(".color-swatch").classList.remove("visible");
+
+  if (style && COLORS[style.toLowerCase()]) {
+    COLORS[style.toLowerCase()].forEach((c) => {
+      const opt = document.createElement("option");
+      opt.value = c.value;
+      opt.textContent = c.label;
+      colorSelect.appendChild(opt);
+    });
+  }
+}
+
+function updateColorSwatch(colorSelect) {
+  const card = colorSelect.closest(".item-card");
+  const swatch = card.querySelector(".color-swatch");
+  const color = colorSelect.value;
+
+  if (color && COLOR_SWATCHES[color]) {
+    swatch.style.backgroundColor = COLOR_SWATCHES[color];
+    swatch.classList.add("visible");
+    colorSelect.classList.add("has-color");
+  } else {
+    swatch.classList.remove("visible");
+    colorSelect.classList.remove("has-color");
+  }
+}
+
+function updateThreadRequired(nameInput) {
+  const card = nameInput.closest(".item-card");
+  const reqSpan = card.querySelector(".thread-req");
+  if (nameInput.value.trim()) {
+    reqSpan.style.display = "inline";
+  } else {
+    reqSpan.style.display = "none";
+  }
+}
+
+function updateCardDisplay(el) {
+  const card = el.closest(".item-card");
+  const product = card.querySelector('[data-field="product"]').value;
+  const style = card.querySelector('[data-field="style"]').value;
+  const size = card.querySelector('[data-field="size"]').value;
+  const color = card.querySelector('[data-field="color"]').value;
+  const name = card.querySelector('[data-field="embroideredName"]').value.trim();
+
+  const titleEl = card.querySelector("h3");
+  const subtitleEl = card.querySelector(".item-subtitle");
+  const priceEl = card.querySelector(".item-price-estimate");
+
+  // Build dynamic title
+  if (product) {
+    const productLabel = PRICING[product]?.label || product;
+    let title = productLabel;
+    if (color) title += ` - ${color}`;
+    if (size) title += ` - ${size}`;
+    titleEl.textContent = title;
+
+    // Show embroidered name as subtitle
+    if (name) {
+      subtitleEl.textContent = `"${name}"`;
+    } else {
+      subtitleEl.textContent = style ? `${style === "Mens" ? "Men's" : "Women's"}` : "";
+    }
+
+    // Show price estimate (base + folding + embroidery + tax, before Stripe fee)
+    const pricing = PRICING[product];
+    if (pricing) {
+      const embFee = name ? EMBROIDERY_FEE : 0;
+      const subtotalMin = pricing.min + embFee + LOGO_FEE + FOLDING_FEE;
+      const subtotalMax = pricing.max + embFee + LOGO_FEE + FOLDING_FEE;
+      const itemMin = subtotalMin + (subtotalMin * TAX_RATE);
+      const itemMax = subtotalMax + (subtotalMax * TAX_RATE);
+      priceEl.textContent = `$${itemMin.toFixed(0)}–$${itemMax.toFixed(0)}`;
+      priceEl.style.display = "inline-block";
+    }
+  } else {
+    titleEl.textContent = "New Item";
+    subtitleEl.textContent = "";
+    priceEl.style.display = "none";
+  }
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+
+function showToast(message, isError) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = "toast" + (isError ? " error" : "") + " show";
+  setTimeout(() => (toast.className = "toast"), 4000);
+}
+
+// ─── Validation ───────────────────────────────────────────────────────────────
+
+function validate() {
+  let valid = true;
+  document.querySelectorAll(".field.invalid").forEach((f) => f.classList.remove("invalid"));
+
+  ["personName", "personPhone", "personEmail", "personPosition"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.closest(".field").classList.add("invalid");
+      valid = false;
+    }
+  });
+
+  const cards = document.querySelectorAll(".item-card");
+  if (cards.length === 0) {
+    showToast("Add at least one item.", true);
+    return false;
+  }
+
+  cards.forEach((card) => {
+    // Required fields
+    ["product", "style", "size", "color", "logo"].forEach((f) => {
+      const el = card.querySelector(`[data-field="${f}"]`);
+      if (!el.value || !el.value.trim()) {
+        el.closest(".field").classList.add("invalid");
+        valid = false;
+      }
+    });
+
+    // Thread color is required only if embroidered name is entered
+    const embName = card.querySelector('[data-field="embroideredName"]').value.trim();
+    const threadColor = card.querySelector('[data-field="threadColor"]');
+    if (embName && !threadColor.value) {
+      threadColor.closest(".field").classList.add("invalid");
+      valid = false;
+    }
+  });
+
+  if (!valid) showToast("Please fill in all required fields.", true);
+  return valid;
+}
+
+// ─── Order Summary ────────────────────────────────────────────────────────────
+
+function buildOrderSummary() {
+  const name = document.getElementById("personName").value.trim();
+  const email = document.getElementById("personEmail").value.trim();
+  const phone = document.getElementById("personPhone").value.trim();
+  const position = document.getElementById("personPosition").value;
+
+  let html = `
+    <div class="summary-customer">
+      <div class="summary-customer-row"><span class="summary-customer-label">Name</span><span>${name}</span></div>
+      <div class="summary-customer-row"><span class="summary-customer-label">Email</span><span>${email}</span></div>
+      <div class="summary-customer-row"><span class="summary-customer-label">Phone</span><span>${phone}</span></div>
+      ${position ? `<div class="summary-customer-row"><span class="summary-customer-label">Role</span><span>${position}</span></div>` : ''}
+    </div>
+    <div class="summary-section-label">Items</div>
+  `;
+
+  let baseMin = 0;
+  let baseMax = 0;
+  let itemCount = 0;
+  let embroideredCount = 0;
+
+  document.querySelectorAll(".item-card").forEach((card) => {
+    const product = card.querySelector('[data-field="product"]').value;
+    const style = card.querySelector('[data-field="style"]').value;
+    const size = card.querySelector('[data-field="size"]').value;
+    const color = card.querySelector('[data-field="color"]').value;
+    const logo = card.querySelector('[data-field="logo"]').value;
+    const embName = card.querySelector('[data-field="embroideredName"]').value.trim();
+    const thread = card.querySelector('[data-field="threadColor"]').value;
+
+    const pricing = PRICING[product];
+    const productLabel = pricing?.label || product;
+    const swatchColor = COLOR_SWATCHES[color] || "#ccc";
+
+    baseMin += pricing?.min || 0;
+    baseMax += pricing?.max || 0;
+    itemCount++;
+    if (embName) embroideredCount++;
+
+    const logoLabel = LOGOS.find(l => l.value === logo)?.label || logo;
+    const embroideryLine = embName
+      ? `Embroidery: "${embName}" (${thread} thread)<br>`
+      : '';
+
+    html += `
+      <div class="summary-item">
+        <div class="summary-item-header">
+          <span class="summary-item-title">${productLabel} - ${size}</span>
+          <span class="summary-item-price">$${pricing?.min.toFixed(2)}–$${pricing?.max.toFixed(2)}</span>
+        </div>
+        <div class="summary-item-details">
+          <span><span class="mini-swatch" style="background: ${swatchColor};"></span>${color}</span> ·
+          ${style === "Mens" ? "Men's" : "Women's"}<br>
+          ${embroideryLine}Logo: ${logoLabel}
+        </div>
+      </div>
+    `;
+  });
+
+  // Calculate fees
+  const embroideryTotal = EMBROIDERY_FEE * embroideredCount;
+  const logoTotal = LOGO_FEE * itemCount;
+  const foldingTotal = FOLDING_FEE * itemCount;
+  const subtotalMin = baseMin + embroideryTotal + logoTotal + foldingTotal;
+  const subtotalMax = baseMax + embroideryTotal + logoTotal + foldingTotal;
+  const taxMin = subtotalMin * TAX_RATE;
+  const taxMax = subtotalMax * TAX_RATE;
+  const stripeFeeMin = ((subtotalMin + taxMin + SHIPPING_FEE) * STRIPE_PERCENT) + STRIPE_FIXED;
+  const stripeFeeMax = ((subtotalMax + taxMax + SHIPPING_FEE) * STRIPE_PERCENT) + STRIPE_FIXED;
+  const totalMin = subtotalMin + taxMin + stripeFeeMin + SHIPPING_FEE;
+  const totalMax = subtotalMax + taxMax + stripeFeeMax + SHIPPING_FEE;
+
+  // Build fee breakdown
+  const embroideryRow = embroideredCount > 0
+    ? `<div class="summary-fee-row">
+        <span>Name embroidery ($${EMBROIDERY_FEE.toFixed(2)}/item × ${embroideredCount})</span>
+        <span>$${embroideryTotal.toFixed(2)}</span>
+      </div>`
+    : '';
+
+  html += `
+    <div class="summary-section-label">Price Estimate</div>
+    <div class="summary-fees">
+      <div class="summary-fee-row">
+        <span>Items subtotal</span>
+        <span>$${baseMin.toFixed(2)}–$${baseMax.toFixed(2)}</span>
+      </div>
+      ${embroideryRow}
+      <div class="summary-fee-row">
+        <span>Logo embroidery ($${LOGO_FEE.toFixed(2)}/item × ${itemCount})</span>
+        <span>$${logoTotal.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
+        <span>Bag and folding fee ($${FOLDING_FEE.toFixed(2)}/item × ${itemCount})</span>
+        <span>$${foldingTotal.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
+        <span>Sales tax (${(TAX_RATE * 100).toFixed(2)}%)</span>
+        <span>$${taxMin.toFixed(2)}–$${taxMax.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
+        <span>Shipping</span>
+        <span>$${SHIPPING_FEE.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
+        <span>Payment processing (2.9% + $0.30)</span>
+        <span>$${stripeFeeMin.toFixed(2)}–$${stripeFeeMax.toFixed(2)}</span>
+      </div>
+    </div>
+    <div class="summary-total">
+      <div class="summary-total-label">
+        Estimated Total
+        <small>Final price depends on order volume</small>
+      </div>
+      <div class="summary-total-amount">$${totalMin.toFixed(2)}–$${totalMax.toFixed(2)}</div>
+    </div>
+  `;
+
+  document.getElementById("summaryBody").innerHTML = html;
+}
+
+function showSummary() {
+  buildOrderSummary();
+  document.getElementById("summaryModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function hideSummary() {
+  document.getElementById("summaryModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// ─── Form Submission ──────────────────────────────────────────────────────────
+
+let pendingPayload = null;
+
+document.getElementById("orderForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  const items = [];
+  document.querySelectorAll(".item-card").forEach((card) => {
+    items.push({
+      product: card.querySelector('[data-field="product"]').value,
+      style: card.querySelector('[data-field="style"]').value,
+      size: card.querySelector('[data-field="size"]').value,
+      color: card.querySelector('[data-field="color"]').value,
+      logo: card.querySelector('[data-field="logo"]').value,
+      embroideredName: card.querySelector('[data-field="embroideredName"]').value.trim(),
+      threadColor: card.querySelector('[data-field="threadColor"]').value,
+    });
+  });
+
+  pendingPayload = {
+    name: document.getElementById("personName").value.trim(),
+    phone: document.getElementById("personPhone").value.trim(),
+    email: document.getElementById("personEmail").value.trim(),
+    position: document.getElementById("personPosition").value,
+    items,
+  };
+
+  showSummary();
+});
+
+document.getElementById("summaryBack").addEventListener("click", hideSummary);
+
+document.getElementById("summaryConfirm").addEventListener("click", async () => {
+  if (!pendingPayload || !APPS_SCRIPT_URL) {
+    showToast("Form endpoint not configured yet.", true);
+    return;
+  }
+
+  const btn = document.getElementById("summaryConfirm");
+  btn.disabled = true;
+  btn.textContent = "Submitting…";
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(pendingPayload),
+      headers: { "Content-Type": "text/plain" },
+    });
+
+    const result = await res.json();
+
+    if (result.status === "ok") {
+      hideSummary();
+      showToast(`Order submitted! ${pendingPayload.items.length} item(s) recorded.`);
+      document.getElementById("orderForm").reset();
+      document.getElementById("itemsContainer").innerHTML = "";
+      itemCount = 0;
+      createItemCard(); // This calls updateItemsCount()
+      pendingPayload = null;
+    } else {
+      throw new Error(result.message || "Unknown error");
+    }
+  } catch (err) {
+    showToast("Submission failed — please try again. " + err.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Submit Order";
+  }
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+
+document.getElementById("addItemBtn").addEventListener("click", createItemCard);
+createItemCard();
+</script>
+
+</body>
+</html>
