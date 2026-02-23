@@ -20,6 +20,8 @@ const PRICING = {
 };
 const EMBROIDERY_FEE = 8.00;
 const LOGO_FEE = 10.00;
+const FOLDING_FEE = 1.25;
+const SHIPPING_FEE = 2.00;
 const TAX_RATE = 0.0725;
 
 // Colors that count as "Gray" for grouping purposes
@@ -76,9 +78,11 @@ function updateSummary() {
   const productIdx = headers.indexOf("Product");
   const colorIdx = headers.indexOf("Color");
   const embroideredNameIdx = headers.indexOf("Embroidered Name");
+  const emailIdx = headers.indexOf("Email");
 
   // Count items by product+color (this is the key unit for pricing tiers)
   const productColorData = {}; // { "Better Sweater Jacket|Black": { count: 5, embroideryCount: 2 } }
+  const uniqueEmails = {}; // track unique customers for shipping fee
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
@@ -96,6 +100,10 @@ function updateSummary() {
     if (embName && embName.toString().trim()) {
       productColorData[key].embroideryCount++;
     }
+
+    if (emailIdx !== -1 && row[emailIdx]) {
+      uniqueEmails[row[emailIdx].toString().toLowerCase().trim()] = true;
+    }
   }
 
   // Calculate totals
@@ -103,6 +111,7 @@ function updateSummary() {
   var grandTotalCost = 0;
   var grandTotalEmbroidery = 0;
   var grandTotalLogoFees = 0;
+  var grandTotalFoldingFees = 0;
   var hasUnfulfilled = false;
 
   // Process each product+color combo
@@ -127,6 +136,7 @@ function updateSummary() {
       grandTotalCost += subtotal;
       grandTotalLogoFees += logoFees;
       grandTotalEmbroidery += embFees;
+      grandTotalFoldingFees += combo.count * FOLDING_FEE;
     }
 
     comboRows.push({
@@ -186,14 +196,18 @@ function updateSummary() {
   output.push(["TOTALS (fulfilled items only)", "", "", "", "", "", ""]);
   rowTracker.totalsTitle = output.length;
 
-  var subtotal = grandTotalCost + grandTotalLogoFees + grandTotalEmbroidery;
+  var uniqueCustomerCount = Object.keys(uniqueEmails).length;
+  var grandTotalShipping = uniqueCustomerCount * SHIPPING_FEE;
+  var subtotal = grandTotalCost + grandTotalLogoFees + grandTotalEmbroidery + grandTotalFoldingFees;
   var taxAmount = subtotal * TAX_RATE;
 
   output.push(["Total Items:", String(grandTotalItems), "", "Product Cost:", "$" + grandTotalCost.toFixed(2), "", ""]);
-  output.push(["", "", "", "Logo Embroidery:", "$" + grandTotalLogoFees.toFixed(2), "", ""]);
+  output.push(["Unique Orders:", String(uniqueCustomerCount), "", "Logo Embroidery:", "$" + grandTotalLogoFees.toFixed(2), "", ""]);
   output.push(["", "", "", "Name Embroidery:", "$" + grandTotalEmbroidery.toFixed(2), "", ""]);
+  output.push(["", "", "", "Bag & Folding:", "$" + grandTotalFoldingFees.toFixed(2), "", ""]);
   output.push(["", "", "", "Sales Tax (" + (TAX_RATE * 100).toFixed(2) + "%):", "$" + taxAmount.toFixed(2), "", ""]);
-  output.push(["", "", "", "GRAND TOTAL:", "$" + (subtotal + taxAmount).toFixed(2), "", ""]);
+  output.push(["", "", "", "Shipping:", "$" + grandTotalShipping.toFixed(2), "", ""]);
+  output.push(["", "", "", "GRAND TOTAL:", "$" + (subtotal + taxAmount + grandTotalShipping).toFixed(2), "", ""]);
   rowTracker.grandTotal = output.length;
 
   // Warning if any unfulfilled
@@ -616,6 +630,9 @@ function handleOrderSubmission(ss, data) {
       item.threadColor || "",
     ]);
   });
+
+  // Update summary now that new rows were added (appendRow doesn't trigger onChange)
+  updateSummary();
 
   return ContentService.createTextOutput(
     JSON.stringify({ status: "ok" })
