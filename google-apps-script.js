@@ -81,8 +81,8 @@ function updateSummary() {
   const emailIdx = headers.indexOf("Email");
 
   // Count items by product+color (this is the key unit for pricing tiers)
-  const productColorData = {}; // { "Better Sweater Jacket|Black": { count: 5, embroideryCount: 2 } }
-  const uniqueEmails = {}; // track unique customers for shipping fee
+  // Track emails per combo so shipping is only counted for fulfilled orders
+  const productColorData = {};
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
@@ -94,15 +94,14 @@ function updateSummary() {
 
     var key = product + "|" + color;
     if (!productColorData[key]) {
-      productColorData[key] = { product: product, color: color, count: 0, embroideryCount: 0 };
+      productColorData[key] = { product: product, color: color, count: 0, embroideryCount: 0, emails: {} };
     }
     productColorData[key].count++;
     if (embName && embName.toString().trim()) {
       productColorData[key].embroideryCount++;
     }
-
     if (emailIdx !== -1 && row[emailIdx]) {
-      uniqueEmails[row[emailIdx].toString().toLowerCase().trim()] = true;
+      productColorData[key].emails[row[emailIdx].toString().toLowerCase().trim()] = true;
     }
   }
 
@@ -112,6 +111,7 @@ function updateSummary() {
   var grandTotalEmbroidery = 0;
   var grandTotalLogoFees = 0;
   var grandTotalFoldingFees = 0;
+  var fulfilledEmails = {}; // only customers with at least one fulfilled combo
   var hasUnfulfilled = false;
 
   // Process each product+color combo
@@ -137,6 +137,10 @@ function updateSummary() {
       grandTotalLogoFees += logoFees;
       grandTotalEmbroidery += embFees;
       grandTotalFoldingFees += combo.count * FOLDING_FEE;
+      var emailKeys = Object.keys(combo.emails || {});
+      for (var e = 0; e < emailKeys.length; e++) {
+        fulfilledEmails[emailKeys[e]] = true;
+      }
     }
 
     comboRows.push({
@@ -196,7 +200,7 @@ function updateSummary() {
   output.push(["TOTALS (fulfilled items only)", "", "", "", "", "", ""]);
   rowTracker.totalsTitle = output.length;
 
-  var uniqueCustomerCount = Object.keys(uniqueEmails).length;
+  var uniqueCustomerCount = Object.keys(fulfilledEmails).length;
   var grandTotalShipping = uniqueCustomerCount * SHIPPING_FEE;
   var subtotal = grandTotalCost + grandTotalLogoFees + grandTotalEmbroidery + grandTotalFoldingFees;
   var taxAmount = subtotal * TAX_RATE;
