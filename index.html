@@ -701,7 +701,7 @@
           <tr><td>Quarter Zip</td><td>$155</td><td>$152</td><td>$142.68</td><td>$139.58</td></tr>
           <tr><td>Vest</td><td>$132.88</td><td>$131.28</td><td>$123.58</td><td>$119.88</td></tr>
         </table>
-        A $10 logo embroidery fee, $0.75 folding fee, and 7.25% NC sales tax are added per item. Final pricing will be communicated once all orders are in.
+        A $10 logo embroidery fee, $1.25 bag and folding fee, and 7.25% NC sales tax are added per item, plus a $2.00 shipping fee per order. Final pricing will be communicated once all orders are in.
       </div>
     </details>
 
@@ -830,7 +830,8 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvKNB_4bAF4D8l
 // Fees
 const EMBROIDERY_FEE = 8.00;
 const LOGO_FEE = 10.00;
-const FOLDING_FEE = 0.75;
+const FOLDING_FEE = 1.25;
+const SHIPPING_FEE = 2.00;
 const TAX_RATE = 0.0725;
 const STRIPE_PERCENT = 0.029;
 const STRIPE_FIXED = 0.30;
@@ -1231,8 +1232,8 @@ function buildOrderSummary() {
   const taxMax = subtotalMax * TAX_RATE;
   const stripeFeeMin = ((subtotalMin + taxMin) * STRIPE_PERCENT) + STRIPE_FIXED;
   const stripeFeeMax = ((subtotalMax + taxMax) * STRIPE_PERCENT) + STRIPE_FIXED;
-  const totalMin = subtotalMin + taxMin + stripeFeeMin;
-  const totalMax = subtotalMax + taxMax + stripeFeeMax;
+  const totalMin = subtotalMin + taxMin + stripeFeeMin + SHIPPING_FEE;
+  const totalMax = subtotalMax + taxMax + stripeFeeMax + SHIPPING_FEE;
 
   // Build fee breakdown
   const embroideryRow = embroideredCount > 0
@@ -1254,7 +1255,7 @@ function buildOrderSummary() {
         <span>$${logoTotal.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
-        <span>Folding fee ($${FOLDING_FEE.toFixed(2)}/item × ${itemCount})</span>
+        <span>Bag and folding fee ($${FOLDING_FEE.toFixed(2)}/item × ${itemCount})</span>
         <span>$${foldingTotal.toFixed(2)}</span>
       </div>
       <div class="summary-fee-row">
@@ -1264,6 +1265,10 @@ function buildOrderSummary() {
       <div class="summary-fee-row">
         <span>Payment processing (2.9% + $0.30)</span>
         <span>$${stripeFeeMin.toFixed(2)}–$${stripeFeeMax.toFixed(2)}</span>
+      </div>
+      <div class="summary-fee-row">
+        <span>Shipping</span>
+        <span>$${SHIPPING_FEE.toFixed(2)}</span>
       </div>
     </div>
     <div class="summary-total">

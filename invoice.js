@@ -270,7 +270,8 @@ async function main() {
   }
   console.log(`  Embroidery fee: $${pricing.embroideryFee.toFixed(2)} per item`);
   console.log(`  Logo embroidery fee: $${pricing.logoFee.toFixed(2)} per item`);
-  console.log(`  Folding fee: $${pricing.foldingFee.toFixed(2)} per item`);
+  console.log(`  Bag and folding fee: $${pricing.foldingFee.toFixed(2)} per item`);
+  console.log(`  Shipping fee: $${pricing.shippingFee.toFixed(2)} per order`);
   console.log(`  Sales tax: ${(pricing.taxRate * 100).toFixed(2)}%`);
   console.log("");
 
@@ -314,7 +315,7 @@ async function main() {
       });
 
       const embNote = item.embroideredName ? ` + $${pricing.embroideryFee} name embroidery` : "";
-      console.log(`  ${item.product} ${item.color} (${item.size}): $${price.toFixed(2)}${embNote} (incl. $${pricing.logoFee} logo + $${pricing.foldingFee} folding)`);
+      console.log(`  ${item.product} ${item.color} (${item.size}): $${price.toFixed(2)}${embNote} (incl. $${pricing.logoFee} logo + $${pricing.foldingFee} bag/folding)`);
     }
 
     if (excludedCount > 0) {
@@ -328,13 +329,22 @@ async function main() {
       continue;
     }
 
-    // Tax is handled by Stripe via tax_rates on line items
+    // Tax is handled by Stripe via tax_rates on line items (applied only to taxable items)
     const tax = calculateTax(customerTotal, pricing.taxRate);
     console.log(`  Sales tax (${(pricing.taxRate * 100).toFixed(2)}%): $${tax.toFixed(2)} (applied by Stripe)`);
 
-    // Add Stripe processing fee (on subtotal + tax)
-    const stripeFee = calculateStripeFee(customerTotal + tax);
-    const orderTotal = customerTotal + tax + stripeFee;
+    // Add shipping fee (per order, non-taxable — added after tax calculation)
+    const shippingFee = pricing.shippingFee || 0;
+    lineItems.push({
+      description: "Shipping",
+      amount: Math.round(shippingFee * 100),
+      currency: pricing.currency,
+      taxable: false,
+    });
+
+    // Add Stripe processing fee (on full invoice: taxable items + tax + shipping)
+    const stripeFee = calculateStripeFee(customerTotal + tax + shippingFee);
+    const orderTotal = customerTotal + tax + shippingFee + stripeFee;
 
     lineItems.push({
       description: "Payment processing fee (2.9% + $0.30)",
@@ -343,6 +353,7 @@ async function main() {
       taxable: false,
     });
 
+    console.log(`  Shipping: $${shippingFee.toFixed(2)}`);
     console.log(`  Processing fee (2.9% + $0.30): $${stripeFee.toFixed(2)}`);
     console.log(`  TOTAL: $${orderTotal.toFixed(2)}`);
     totalRevenue += orderTotal;
