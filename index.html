@@ -555,6 +555,8 @@ tailwind.config = {
               <option>Fellow</option>
               <option>Resident</option>
               <option>APP</option>
+              <option>APP Fellow</option>
+              <option>Pharmacist</option>
               <option>Nurse</option>
               <option>Tech</option>
               <option>EMS</option>
@@ -574,19 +576,20 @@ tailwind.config = {
         <div class="mb-6">
           <p class="section-header">PRODUCT REFERENCE</p>
           <div class="flex gap-2">
-            <div onclick="openLightbox('products')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity" role="button">
-              <div class="aspect-[3/2] overflow-hidden"><img src="images/products.jpg" alt="Products" loading="lazy" class="w-full h-full object-cover"></div>
-              <div class="px-2 py-1.5 text-center"><span class="text-ios-caption1 font-medium">Products</span></div>
+            <div onclick="openLightbox('products')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col" role="button" aria-label="Tap to enlarge products">
+              <div class="aspect-[3/2] overflow-hidden"><img src="images/products.jpg" alt="Product Options" loading="lazy" class="w-full h-full object-cover"></div>
+              <div class="px-2 py-1.5 text-center mt-auto"><span class="text-ios-caption1 font-medium">Products</span></div>
             </div>
-            <div onclick="openLightbox('colors')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity" role="button">
-              <div class="aspect-[3/2] overflow-hidden"><img src="images/colors.jpg" alt="Colors" loading="lazy" class="w-full h-full object-cover"></div>
-              <div class="px-2 py-1.5 text-center"><span class="text-ios-caption1 font-medium">Colors</span></div>
+            <div onclick="openLightbox('colors')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col" role="button" aria-label="Tap to enlarge colors">
+              <div class="aspect-[3/2] overflow-hidden"><img src="images/colors.jpg" alt="Color Options" loading="lazy" class="w-full h-full object-cover"></div>
+              <div class="px-2 py-1.5 text-center mt-auto"><span class="text-ios-caption1 font-medium">Colors</span></div>
             </div>
-            <div onclick="openLightbox('logos')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity" role="button">
-              <div class="aspect-[3/2] overflow-hidden bg-black"><img src="images/logos.jpg" alt="Logos" loading="lazy" class="w-full h-full object-contain"></div>
-              <div class="px-2 py-1.5 text-center"><span class="text-ios-caption1 font-medium">Logos</span></div>
+            <div onclick="openLightbox('logos')" class="flex-1 bg-white rounded-[10px] overflow-hidden cursor-pointer active:opacity-80 transition-opacity flex flex-col" role="button" aria-label="Tap to enlarge logos">
+              <div class="aspect-[3/2] overflow-hidden bg-black"><img src="images/logos.jpg" alt="Logo Options" loading="lazy" class="w-full h-full object-contain"></div>
+              <div class="px-2 py-1.5 text-center mt-auto"><span class="text-ios-caption1 font-medium">Logos</span></div>
             </div>
           </div>
+          <p class="text-ios-caption2 text-ios-label-tertiary text-center mt-1.5">Tap any image to enlarge</p>
         </div>
 
         <div id="itemsContainer"></div>
