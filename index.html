@@ -896,7 +896,7 @@ function createItemCard() {
         </div>
       </div>
       <div class="card-row" data-validate="logo">
-        <label class="field-label" for="logo_${id}">Logo <span class="req">*</span></label>
+        <label class="field-label" for="logo_${id}">Logo — Right Chest <span class="req">*</span></label>
         <select id="logo_${id}" data-field="logo" onchange="updateLogoPreview(this)">
           <option value="">Choose a logo</option>
           ${logoOpts}
@@ -908,18 +908,26 @@ function createItemCard() {
     </div>
 
     <div class="flex items-center justify-between px-4 mt-5 mb-1.5">
-      <p class="section-header px-0" style="padding:0; margin:0;">PERSONALIZATION</p>
+      <p class="section-header px-0" style="padding:0; margin:0;">NAME EMBROIDERY</p>
       <span class="text-ios-caption1 text-ios-label-tertiary">Optional &middot; $8/item</span>
     </div>
 
     <div class="bg-white rounded-[10px] overflow-hidden">
       <div class="card-row">
         <label class="field-label" for="embName_${id}">Name to Embroider</label>
-        <input type="text" id="embName_${id}" data-field="embroideredName" maxlength="20" placeholder="Jane Doe, MD" autocorrect="off" autocapitalize="words" oninput="updateCardDisplay(this); updateThreadRequired(this);">
+        <input type="text" id="embName_${id}" data-field="embroideredName" maxlength="20" placeholder="Jane Doe, MD" autocorrect="off" autocapitalize="words" oninput="updateCardDisplay(this); updateEmbroideryFields(this);">
         <span class="text-ios-caption2 text-ios-label-tertiary mt-1 block">Max 20 characters &middot; No returns on embroidered items. Double-check spelling.</span>
       </div>
-      <div class="card-row" data-validate="threadColor">
-        <label class="field-label" for="thread_${id}">Thread Color <span class="thread-req hidden req">*</span></label>
+      <div class="card-row emb-field hidden" data-validate="embSide">
+        <label class="field-label" for="embSide_${id}">Chest Position <span class="req">*</span></label>
+        <select id="embSide_${id}" data-field="embSide">
+          <option value="">Select side</option>
+          <option value="Left Chest">Left Chest</option>
+          <option value="Right Chest">Right Chest</option>
+        </select>
+      </div>
+      <div class="card-row emb-field hidden" data-validate="threadColor">
+        <label class="field-label" for="thread_${id}">Thread Color <span class="req">*</span></label>
         <select id="thread_${id}" data-field="threadColor">
           <option value="">Select</option>
           ${threadOpts}
@@ -1028,10 +1036,10 @@ function updateLogoPreview(logoSelect) {
   }
 }
 
-function updateThreadRequired(nameInput) {
+function updateEmbroideryFields(nameInput) {
   const card = nameInput.closest(".item-card");
-  const reqSpan = card.querySelector(".thread-req");
-  reqSpan.classList.toggle("hidden", !nameInput.value.trim());
+  const hasName = !!nameInput.value.trim();
+  card.querySelectorAll(".emb-field").forEach(el => el.classList.toggle("hidden", !hasName));
 }
 
 function updateCardDisplay(el) {
@@ -1135,12 +1143,16 @@ function validateStep2() {
     });
 
     const embName = card.querySelector('[data-field="embroideredName"]').value.trim();
-    const threadColor = card.querySelector('[data-field="threadColor"]');
-    if (embName && !threadColor.value) {
-      const row = threadColor.closest("[data-validate]") || threadColor.closest(".card-row");
-      if (row) row.classList.add("invalid");
-      if (!firstInvalid) firstInvalid = row;
-      valid = false;
+    if (embName) {
+      ["embSide", "threadColor"].forEach(f => {
+        const el = card.querySelector(`[data-field="${f}"]`);
+        if (!el.value) {
+          const row = el.closest("[data-validate]") || el.closest(".card-row");
+          if (row) row.classList.add("invalid");
+          if (!firstInvalid) firstInvalid = row;
+          valid = false;
+        }
+      });
     }
   });
 
@@ -1209,6 +1221,7 @@ function buildOrderSummary() {
     const color = escapeHtml(card.querySelector('[data-field="color"]').value);
     const logo = card.querySelector('[data-field="logo"]').value;
     const embName = escapeHtml(card.querySelector('[data-field="embroideredName"]').value.trim());
+    const embSide = escapeHtml(card.querySelector('[data-field="embSide"]').value);
     const thread = escapeHtml(card.querySelector('[data-field="threadColor"]').value);
 
     const pricing = PRICING[product];
@@ -1237,8 +1250,8 @@ function buildOrderSummary() {
             <span class="inline-block w-2.5 h-2.5 rounded-full border border-ios-separator flex-shrink-0" style="background:${swatchColor}"></span>
             ${color} &middot; ${styleLabel}
           </div>
-          ${embName ? `<div>"${embName}" &middot; ${thread} thread</div>` : ""}
-          <div class="text-ios-caption1 text-ios-label-tertiary mt-1">${logoLabel}</div>
+          ${embName ? `<div>"${embName}" &middot; ${embSide} &middot; ${thread} thread</div>` : ""}
+          <div class="text-ios-caption1 text-ios-label-tertiary mt-1">${logoLabel} &middot; Right Chest</div>
           ${embWarning}
         </div>
       </div>
@@ -1338,6 +1351,7 @@ async function submitOrder() {
       color: card.querySelector('[data-field="color"]').value,
       logo: card.querySelector('[data-field="logo"]').value,
       embroideredName: card.querySelector('[data-field="embroideredName"]').value.trim(),
+      embSide: card.querySelector('[data-field="embSide"]').value,
       threadColor: card.querySelector('[data-field="threadColor"]').value,
     });
   });
