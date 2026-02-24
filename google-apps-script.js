@@ -611,6 +611,7 @@ function handleOrderSubmission(ss, data) {
       "Color",
       "Logo",
       "Embroidered Name",
+      "Embroidery Position",
       "Thread Color",
     ]);
   }
@@ -631,6 +632,7 @@ function handleOrderSubmission(ss, data) {
       item.color,
       item.logo,
       item.embroideredName || "",
+      item.embSide || "",
       item.threadColor || "",
     ]);
   });
