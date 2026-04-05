@@ -180,10 +180,20 @@ async function createInvoice(customer, lineItems, taxRateId) {
   }
 
   // Create invoice
+  // Due date: April 2, 2026 11:59 PM EDT = April 3, 2026 03:59 AM UTC
+  const dueDate = Math.floor(new Date("2026-04-03T03:59:00Z").getTime() / 1000);
+
   const invoice = await stripe.invoices.create({
     customer: stripeCustomer.id,
     collection_method: "send_invoice",
-    days_until_due: 14,
+    due_date: dueDate,
+    description: "CMC EM Patagonia Better Sweater Group Order",
+    footer: "Questions? Contact Daniel Evans — daniel.evans@advocatehealth.org",
+    statement_descriptor: "CMC EM PATAGONIA",
+    custom_fields: [
+      { name: "Contact", value: "Daniel Evans" },
+      { name: "Payment Deadline", value: "April 2, 2026" },
+    ],
     metadata: { source: "cmc-patagonia-order" },
   });
 

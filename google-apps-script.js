@@ -79,6 +79,7 @@ function updateSummary() {
   const colorIdx = headers.indexOf("Color");
   const embroideredNameIdx = headers.indexOf("Embroidered Name");
   const emailIdx = headers.indexOf("Email");
+  const paidIdx = headers.indexOf("Paid");
 
   // Count items by product+color (this is the key unit for pricing tiers)
   // Track emails per combo so shipping is only counted for fulfilled orders
@@ -94,9 +95,12 @@ function updateSummary() {
 
     var key = product + "|" + color;
     if (!productColorData[key]) {
-      productColorData[key] = { product: product, color: color, count: 0, embroideryCount: 0, emails: {} };
+      productColorData[key] = { product: product, color: color, count: 0, paidCount: 0, embroideryCount: 0, emails: {} };
     }
     productColorData[key].count++;
+    if (paidIdx !== -1 && row[paidIdx] && row[paidIdx].toString().trim() === "✓") {
+      productColorData[key].paidCount++;
+    }
     if (embName && embName.toString().trim()) {
       productColorData[key].embroideryCount++;
     }
@@ -143,16 +147,20 @@ function updateSummary() {
       }
     }
 
+    var paidStatus = combo.paidCount >= 6 ? "✓ PAID" : combo.paidCount + " of 6";
+
     comboRows.push({
       product: combo.product,
       color: combo.color,
       count: combo.count,
+      paidCount: combo.paidCount,
       tier: tier,
       unitPrice: unitPrice,
       subtotal: subtotal,
       embroideryCount: combo.embroideryCount,
       embFees: embFees,
-      status: status
+      status: status,
+      paidStatus: paidStatus
     });
   }
 
@@ -160,17 +168,20 @@ function updateSummary() {
   var output = [];
   var rowTracker = {}; // Track special rows for formatting
 
+  var NUM_COLS = 9;
+  var emptyRow = ["", "", "", "", "", "", "", "", ""];
+
   // Header section
-  output.push(["ORDER SUMMARY", "", "", "", "", "", ""]);
+  output.push(["ORDER SUMMARY", "", "", "", "", "", "", "", ""]);
   rowTracker.title = output.length;
 
-  output.push(["", "", "", "", "", "", ""]);
+  output.push(emptyRow);
 
   // Main breakdown table
-  output.push(["PRODUCT + COLOR BREAKDOWN (Tier is per combo)", "", "", "", "", "", ""]);
+  output.push(["PRODUCT + COLOR BREAKDOWN (Tier is per combo)", "", "", "", "", "", "", "", ""]);
   rowTracker.tableTitle = output.length;
 
-  output.push(["Product", "Color", "Qty", "Tier", "Unit Price", "Subtotal", "Status"]);
+  output.push(["Product", "Color", "Qty", "Tier", "Unit Price", "Subtotal", "Status", "Paid Qty", "Paid Status"]);
   rowTracker.tableHeader = output.length;
 
   var currentProduct = "";
@@ -179,7 +190,7 @@ function updateSummary() {
 
     // Add blank row between products for readability
     if (cr.product !== currentProduct && currentProduct !== "") {
-      output.push(["", "", "", "", "", "", ""]);
+      output.push(emptyRow);
     }
     currentProduct = cr.product;
 
@@ -190,14 +201,16 @@ function updateSummary() {
       cr.count < 6 ? "N/A" : cr.tier + "+",
       cr.count < 6 ? "-" : "$" + cr.unitPrice.toFixed(2),
       cr.count < 6 ? "-" : "$" + cr.subtotal.toFixed(2),
-      cr.status
+      cr.status,
+      String(cr.paidCount),
+      cr.paidStatus
     ]);
   }
 
-  output.push(["", "", "", "", "", "", ""]);
+  output.push(emptyRow);
 
   // Totals (only for fulfilled items)
-  output.push(["TOTALS (fulfilled items only)", "", "", "", "", "", ""]);
+  output.push(["TOTALS (fulfilled items only)", "", "", "", "", "", "", "", ""]);
   rowTracker.totalsTitle = output.length;
 
   var uniqueCustomerCount = Object.keys(fulfilledEmails).length;
@@ -205,29 +218,29 @@ function updateSummary() {
   var subtotal = grandTotalCost + grandTotalLogoFees + grandTotalEmbroidery + grandTotalFoldingFees;
   var taxAmount = subtotal * TAX_RATE;
 
-  output.push(["Total Items:", String(grandTotalItems), "", "Product Cost:", "$" + grandTotalCost.toFixed(2), "", ""]);
-  output.push(["Unique Orders:", String(uniqueCustomerCount), "", "Logo Embroidery:", "$" + grandTotalLogoFees.toFixed(2), "", ""]);
-  output.push(["", "", "", "Name Embroidery:", "$" + grandTotalEmbroidery.toFixed(2), "", ""]);
-  output.push(["", "", "", "Bag & Folding:", "$" + grandTotalFoldingFees.toFixed(2), "", ""]);
-  output.push(["", "", "", "Sales Tax (" + (TAX_RATE * 100).toFixed(2) + "%):", "$" + taxAmount.toFixed(2), "", ""]);
-  output.push(["", "", "", "Shipping:", "$" + grandTotalShipping.toFixed(2), "", ""]);
-  output.push(["", "", "", "GRAND TOTAL:", "$" + (subtotal + taxAmount + grandTotalShipping).toFixed(2), "", ""]);
+  output.push(["Total Items:", String(grandTotalItems), "", "Product Cost:", "$" + grandTotalCost.toFixed(2), "", "", "", ""]);
+  output.push(["Unique Orders:", String(uniqueCustomerCount), "", "Logo Embroidery:", "$" + grandTotalLogoFees.toFixed(2), "", "", "", ""]);
+  output.push(["", "", "", "Name Embroidery:", "$" + grandTotalEmbroidery.toFixed(2), "", "", "", ""]);
+  output.push(["", "", "", "Bag & Folding:", "$" + grandTotalFoldingFees.toFixed(2), "", "", "", ""]);
+  output.push(["", "", "", "Sales Tax (" + (TAX_RATE * 100).toFixed(2) + "%):", "$" + taxAmount.toFixed(2), "", "", "", ""]);
+  output.push(["", "", "", "Shipping:", "$" + grandTotalShipping.toFixed(2), "", "", "", ""]);
+  output.push(["", "", "", "GRAND TOTAL:", "$" + (subtotal + taxAmount + grandTotalShipping).toFixed(2), "", "", "", ""]);
   rowTracker.grandTotal = output.length;
 
   // Warning if any unfulfilled
   if (hasUnfulfilled) {
-    output.push(["", "", "", "", "", "", ""]);
-    output.push(["⚠️ WARNING: Combos marked 'NOT FULFILLED' are below the 6-item minimum and will not be ordered.", "", "", "", "", "", ""]);
+    output.push(emptyRow);
+    output.push(["⚠️ WARNING: Combos marked 'NOT FULFILLED' are below the 6-item minimum and will not be ordered.", "", "", "", "", "", "", "", ""]);
     rowTracker.warning = output.length;
   }
 
   // Write to sheet
-  summarySheet.getRange(1, 1, output.length, 7).setValues(output);
+  summarySheet.getRange(1, 1, output.length, NUM_COLS).setValues(output);
 
   // Apply formatting
   summarySheet.getRange(rowTracker.title, 1).setFontWeight("bold").setFontSize(14);
   summarySheet.getRange(rowTracker.tableTitle, 1).setFontWeight("bold").setFontSize(11);
-  summarySheet.getRange(rowTracker.tableHeader, 1, 1, 7).setFontWeight("bold").setBackground("#e8e2da");
+  summarySheet.getRange(rowTracker.tableHeader, 1, 1, NUM_COLS).setFontWeight("bold").setBackground("#e8e2da");
   summarySheet.getRange(rowTracker.totalsTitle, 1).setFontWeight("bold").setFontSize(11);
   summarySheet.getRange(rowTracker.grandTotal, 4, 1, 2).setFontWeight("bold").setBackground("#d4f5d4");
 
@@ -236,7 +249,7 @@ function updateSummary() {
   }
 
   // Auto-resize columns
-  summarySheet.autoResizeColumns(1, 7);
+  summarySheet.autoResizeColumns(1, NUM_COLS);
 
   SpreadsheetApp.getActiveSpreadsheet().toast("Summary updated!", "Success");
 }
